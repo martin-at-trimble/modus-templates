@@ -1,0 +1,117 @@
+- generic [ref=f2e4]:
+  - navigation "Templates" [ref=f2e5]:
+    - link "GitHub dashboard" [ref=f2e7] [cursor=pointer]:
+      - /url: /github-dashboard
+    - link "Resizable panels" [ref=f2e9] [cursor=pointer]:
+      - /url: /resizable-panels
+    - link "Code editor" [ref=f2e11] [cursor=pointer]:
+      - /url: /code-editor
+  - generic [ref=f2e12]:
+    - heading "3899. Angles of a triangle" [level=1] [ref=f2e13]
+    - banner [ref=f2e14]:
+      - paragraph [ref=f2e16]: 3899. Angles of a triangle
+      - generic [ref=f2e17]:
+        - button "Run" [ref=f2e19] [cursor=pointer]:
+          - generic [ref=f2e20]: play_circle
+        - button [ref=f2e23] [cursor=pointer]:
+          - generic [ref=f2e24]: upload
+          - text: Submit
+    - group "Resizable panels" [ref=f2e27]:
+      - region "Problem statement" [ref=f2e29]:
+        - generic [ref=f2e30]:
+          - heading "3899. Angles of a triangle" [level=2] [ref=f2e32]
+          - alert [ref=f2e34]: Solved
+        - alert [ref=f2e36]: Medium
+        - generic [ref=f2e37]:
+          - paragraph [ref=f2e39]: You are given a positive integer array sides of length 3.
+          - paragraph [ref=f2e41]: Determine if there exists a triangle with positive area whose side lengths are given by the elements of sides.
+          - paragraph [ref=f2e43]: If such a triangle exists, return an array of three floating-point numbers representing its internal angles (in degrees), sorted in non-decreasing order. Otherwise, return an empty array.
+          - paragraph [ref=f2e45]: Answers within 10^-5 of the actual answer will be accepted.
+        - generic [ref=f2e46]:
+          - paragraph [ref=f2e48]: "Example 1:"
+          - paragraph [ref=f2e49]: "Input: sides = [3,4,5]"
+          - paragraph [ref=f2e50]: "Output: [36.86990,53.13010,90.00000]"
+          - paragraph [ref=f2e52]: "Explanation: You can form a right-angled triangle with side lengths 3, 4, and 5. The internal angles of this triangle are approximately 36.869897646, 53.130102354, and 90 degrees respectively."
+        - generic [ref=f2e53]:
+          - paragraph [ref=f2e55]: "Example 2:"
+          - paragraph [ref=f2e56]: "Input: sides = [2,4,2]"
+          - paragraph [ref=f2e57]: "Output: []"
+          - paragraph [ref=f2e59]: "Explanation: You cannot form a triangle with positive area using side lengths 2, 4, and 2."
+        - generic [ref=f2e60]:
+          - paragraph [ref=f2e62]: "Constraints:"
+          - list [ref=f2e63]:
+            - listitem [ref=f2e64]:
+              - paragraph [ref=f2e66]: sides.length == 3
+            - listitem [ref=f2e67]:
+              - paragraph [ref=f2e69]: 1 <= sides[i] <= 1000
+        - generic [ref=f2e70]:
+          - generic [ref=f2e71]:
+            - button "Like" [ref=f2e73] [cursor=pointer]:
+              - generic [ref=f2e74]: thumbs_up
+            - button "Dislike" [ref=f2e77] [cursor=pointer]:
+              - generic [ref=f2e78]: thumbs_down
+            - button "Comments" [ref=f2e81] [cursor=pointer]:
+              - generic [ref=f2e82]: comment
+            - button "Add to favorites" [ref=f2e85] [cursor=pointer]:
+              - generic [ref=f2e86]: star
+            - button "Share" [ref=f2e89] [cursor=pointer]:
+              - generic [ref=f2e90]: share
+            - button "Help" [ref=f2e93] [cursor=pointer]:
+              - generic [ref=f2e94]: help
+          - paragraph [ref=f2e99]: 3 online
+      - separator "Resize panel 1 and panel 2" [ref=f2e101]
+      - group "Resizable panels" [ref=f2e105]:
+        - generic [ref=f2e107]:
+          - generic [ref=f2e108]:
+            - combobox "Language" [ref=f2e110] [cursor=pointer]:
+              - option "JavaScript" [selected]
+              - option "TypeScript"
+              - option "Python3"
+              - option "Java"
+              - option "C++"
+            - generic [ref=f2e111]:
+              - generic "Auto-save settings" [ref=f2e113]:
+                - button "Auto-save settings" [ref=f2e114] [cursor=pointer]:
+                  - generic [ref=f2e115]:
+                    - generic [ref=f2e116]: lock
+                    - text: Auto
+              - button "Layout options" [ref=f2e119] [cursor=pointer]:
+                - generic [ref=f2e120]: list_bulleted
+              - button "Add to favorites" [ref=f2e123] [cursor=pointer]:
+                - generic [ref=f2e124]: star
+              - button "Format code" [ref=f2e127] [cursor=pointer]:
+                - generic [ref=f2e128]: code
+              - button "Submission history" [ref=f2e131] [cursor=pointer]:
+                - generic [ref=f2e132]: history
+              - button "Full screen" [ref=f2e135] [cursor=pointer]:
+                - generic [ref=f2e136]: full_screen
+          - generic [ref=f2e138]:
+            - generic [ref=f2e139]:
+              - generic [ref=f2e140]: "1"
+              - generic [ref=f2e141]: "2"
+              - generic [ref=f2e142]: "3"
+              - generic [ref=f2e143]: "4"
+              - generic [ref=f2e144]: "5"
+              - generic [ref=f2e145]: "6"
+              - generic [ref=f2e146]: "7"
+              - generic [ref=f2e147]: "8"
+            - textbox "Code editor" [ref=f2e148]: "/** * @param {number[]} sides * @return {number[]} */ var internalAngles = function(sides) { };"
+        - generic:
+          - separator "Resize panel 1 and panel 2"
+        - generic [ref=f2e151]:
+          - generic [ref=f2e152]:
+            - tablist "Testcase and result" [ref=f2e153]:
+              - tab "Testcase" [selected] [ref=f2e154] [cursor=pointer]
+              - tab "Test result" [ref=f2e156] [cursor=pointer]
+            - tabpanel
+          - generic [ref=f2e158]:
+            - group "Test cases" [ref=f2e159]:
+              - button "Case 1" [ref=f2e161] [cursor=pointer]
+              - button "Case 2" [ref=f2e163] [cursor=pointer]
+              - button "Add test case" [ref=f2e165] [cursor=pointer]:
+                - generic [ref=f2e166]: add
+            - generic [ref=f2e168]:
+              - paragraph [ref=f2e170]: sides =
+              - textbox "sides value" [ref=f2e173]:
+                - /placeholder: ""
+                - text: 3,4,5
