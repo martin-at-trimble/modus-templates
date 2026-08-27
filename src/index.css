@@ -1,58 +1,70 @@
 @import '@trimble-oss/moduswebcomponents/modus-wc-styles.css';
+@import 'tailwindcss';
 
 :root {
-  color-scheme: light dark;
+  --padding-card: 1rem;
 }
 
 html,
 body {
   margin: 0;
-  min-height: 100%;
-}
-
-body {
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Open Sans', sans-serif;
   background-color: var(--modus-wc-color-base-page);
   color: var(--modus-wc-color-base-content);
-  font-family: 'Open Sans', system-ui, 'Segoe UI', Roboto, sans-serif;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 #root {
-  min-height: 100dvh;
+  height: 100dvh;
+  max-height: 100dvh;
+  min-height: 0;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+  background-color: var(--modus-wc-color-base-page);
 }
 
-* {
-  box-sizing: border-box;
+#root > modus-wc-theme-provider {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
 }
 
 .app-templates {
   display: flex;
   flex-direction: column;
-  min-height: 100dvh;
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
 }
 
 .template-switcher {
   display: flex;
-  flex-wrap: wrap;
+  flex-shrink: 0;
   align-items: center;
-  gap: 1.5rem;
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
+  gap: var(--modus-wc-spacing-sm, 0.5rem);
+  padding-block: var(--modus-wc-spacing-2xs, 0.25rem);
   border-bottom: 1px solid var(--modus-wc-color-base-200);
-  background-color: var(--modus-wc-color-base-100);
+  background-color: var(--modus-wc-color-base-page);
 }
 
 .template-switcher-link {
-  font-size: 0.875rem;
-  color: var(--modus-wc-color-base-content-low-contrast);
+  padding: var(--modus-wc-spacing-2xs, 0.25rem) var(--modus-wc-spacing-sm, 0.5rem);
+  border-radius: var(--modus-wc-border-radius, 0.5rem);
+  color: var(--modus-wc-color-base-content);
+  text-decoration: none;
+  font-size: var(--modus-wc-font-size-sm, 0.875rem);
 }
 
+.template-switcher-link:hover,
 .template-switcher-link--active {
-  color: var(--modus-wc-color-primary);
-  font-weight: 600;
+  background-color: var(--modus-wc-color-base-200);
+}
+
+.template-switcher-link:focus-visible {
+  outline: 2px solid var(--modus-wc-color-primary);
+  outline-offset: 2px;
 }
