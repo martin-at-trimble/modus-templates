@@ -1,75 +1,77 @@
-# React + TypeScript + Vite
+# Modus templates
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A showcase of UI templates built with **Modus Web Components**, generated with the
+[`/modus-template`](.claude/commands/modus-template.md) Claude Code command. Each template
+in [`src/templates/`](src/templates/) started as a single screenshot handed to that command,
+which turns it into a copy-paste page you can drop into your own Modus app.
 
-Currently, two official plugins are available:
+This repo has two jobs:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+1. **Showcase** what `/modus-template` produces — browse the gallery, copy a page you like.
+2. **Host the command itself** so you can pull it into your own project and point it at your
+   own screenshots.
 
-## React Compiler
+## Templates in this repo
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+| Template | Route | Source |
+|---|---|---|
+| GitHub dashboard | `/github-dashboard` | [`src/templates/GithubDashboard`](src/templates/GithubDashboard) |
+| Resizable panels | `/resizable-panels` | [`src/templates/ResizablePanelsPlayground`](src/templates/ResizablePanelsPlayground) |
+| Code editor | `/code-editor` | [`src/templates/CodeEditor`](src/templates/CodeEditor) |
+| Music streaming | `/music-streaming` | [`src/templates/MusicStreaming`](src/templates/MusicStreaming) |
 
-## Expanding the ESLint configuration
+Run it locally to click through them:
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+Each template is intentionally self-contained (one page file + a colocated data/types file) —
+see **Keep it copy-pasteable** in the command below for why, and copy a `src/templates/<Name>/`
+folder straight into another Modus app when you find one you want.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## The `/modus-template` command
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+[`.claude/commands/modus-template.md`](.claude/commands/modus-template.md) is a Claude Code
+slash command: give it a screenshot plus a name and title, and it builds a matching page using
+Modus components, tokens, and events — not raw HTML or another component library. It works
+against **any** Modus stack (React, Angular, Vue, vanilla); it detects your framework and
+installed Modus version before writing anything.
 
 ```
+/modus-template <template name> | <page title> | [optional notes]
+```
+
+Attach a screenshot to the same message. For example:
+
+```
+/modus-template github-dashboard | GitHub dashboard | keep the left sidebar collapsed by default
+```
+
+The command will:
+
+- Detect your framework, installed `@trimble-oss/moduswebcomponents` version, bundler, and CSS
+  setup instead of assuming Vite + React + Tailwind.
+- Load the matching `modus-wc-*` skill for any component it touches (tabs, modal, table, side
+  navigation, form inputs, etc.) before reaching for generic MCP prop lookups.
+- Rebuild the screenshot's layout and interactions with Modus components, slots, and CSS
+  tokens — never static hex, never a second component library, never a guessed icon name.
+- Ship the result as **one page**, wired as the sole route in your app (it won't merge itself
+  into an existing nav or template gallery unless you ask).
+- Start (or reuse) your dev server and actually exercise the page in a browser — clicking
+  menus, opening modals, dragging resizable panes — before calling the job done.
+
+### Using it in your own project
+
+1. Copy [`.claude/commands/modus-template.md`](.claude/commands/modus-template.md) into your
+   project's `.claude/commands/` folder (create it if it doesn't exist).
+2. Make sure your project has `@trimble-oss/moduswebcomponents` (or the matching framework
+   wrapper) installed — see the [Modus packages guidance](.claude/rules/modus-essentials.md#packages)
+   if not.
+3. Copying the `.claude/rules/modus-*.md` files from this repo alongside the command is
+   optional but recommended — they encode the Modus conventions (cards, buttons, forms, layout,
+   accessibility, per-framework integration) the command follows, and it will read them
+   automatically if present.
+4. In Claude Code, run `/modus-template <name> | <title> | [notes]` with a screenshot attached.
+
