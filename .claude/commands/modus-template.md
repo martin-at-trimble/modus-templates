@@ -1,6 +1,6 @@
 ---
-description: Build a copy-paste Modus Web Components template page from a screenshot
-argument-hint: <template name> | <page title> | [optional notes] | [verify: disabled|minimal|high]
+description: "Build a copy-paste Modus Web Components template page from a screenshot"
+argument-hint: "<template name> | <page title> | [optional notes] | [verify: disabled|minimal|high]"
 ---
 
 <!-- Self-contained Modus template-builder command — no external prompt file required.
