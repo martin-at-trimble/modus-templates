@@ -1,0 +1,285 @@
+.gh-inline-text {
+  margin: 0;
+}
+
+.gh-muted-text {
+  color: var(--modus-wc-color-base-content-low-contrast);
+}
+
+/* ===== Root page + navbar ===== */
+
+.gh-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  background-color: var(--modus-wc-color-base-page);
+}
+
+.gh-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.gh-navbar-brand {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.gh-navbar-brand-mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: var(--modus-wc-border-radius-md, 6px);
+  background-color: var(--modus-wc-color-base-content);
+  color: var(--modus-wc-color-base-page);
+  flex-shrink: 0;
+}
+
+.gh-navbar-breadcrumb {
+  white-space: nowrap;
+}
+
+.gh-navbar-search {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  max-width: 26rem;
+  align-items: center;
+}
+
+@media (max-width: 767px) {
+  .gh-navbar-search {
+    display: none;
+  }
+}
+
+.gh-navbar-end {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.gh-navbar-avatar-trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* ===== Two-column body ===== */
+
+.gh-body {
+  width: 100%;
+  max-width: 84rem;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 17.5rem minmax(0, 1fr);
+  gap: 2rem;
+  padding: 1.5rem 1.5rem 3rem;
+  flex: 1;
+  min-width: 0;
+}
+
+@media (max-width: 899px) {
+  .gh-body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ===== Sidebar ===== */
+
+.gh-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  min-width: 0;
+}
+
+.gh-sidebar-user-trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.gh-sidebar-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.gh-sidebar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+/* ===== Main column ===== */
+
+.gh-main {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  min-width: 0;
+}
+
+.gh-main-heading {
+  margin: 0;
+}
+
+/* ===== Prompt composer ===== */
+
+.gh-composer-body textarea {
+  resize: vertical;
+}
+
+.gh-composer-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.gh-composer-toolbar-start {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.gh-dropdown-trigger-content {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+/* ===== Quick actions ===== */
+
+.gh-quick-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.625rem;
+}
+
+.gh-quick-actions-secondary {
+  justify-content: center;
+}
+
+/* ===== Playlist / video card ===== */
+
+.gh-video-card {
+  position: relative;
+}
+
+.gh-video-close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 1;
+}
+
+.gh-video-card-body {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.gh-video-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1 1 16rem;
+  min-width: 0;
+}
+
+.gh-video-thumb {
+  position: relative;
+  flex: 0 0 auto;
+  width: 15rem;
+  max-width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--modus-wc-border-radius-md, 8px);
+  overflow: hidden;
+  background-image: linear-gradient(
+    135deg,
+    var(--modus-wc-color-primary) 0%,
+    var(--modus-wc-color-base-content) 100%
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gh-video-thumb-play {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 999px;
+  background-color: color-mix(in srgb, var(--modus-wc-color-base-page) 88%, transparent);
+  color: var(--modus-wc-color-base-content);
+}
+
+/* ===== Getting started ===== */
+
+.gh-getting-started-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.gh-getting-started-progress {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1 1 12rem;
+  min-width: 10rem;
+}
+
+.gh-getting-started-progress modus-wc-progress {
+  flex: 1;
+  max-width: 12rem;
+}
+
+.gh-getting-started-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* modus-wc-button ships its own chrome/hover/focus-visible styling;
+   only override layout so icon + title sit left-aligned in a full-width row. */
+.gh-accordion-row-header {
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.gh-accordion-row-title {
+  flex: 1;
+  min-width: 0;
+}
+
+.gh-accordion-row-body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding-left: 1.75rem;
+  padding-top: 0.5rem;
+}
+
+.gh-accordion-row-body[hidden] {
+  display: none !important;
+}

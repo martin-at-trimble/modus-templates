@@ -1,0 +1,50 @@
+<!-- Claude Code: save as `.claude/rules/modus-vue.md` or merge sections into CLAUDE.md. -->
+# Modus Web Components — Vue
+
+Use this alongside [.cursor/rules/modus-essentials.md](./modus-essentials.md) (packages, theme, Modus-only surface) and [.cursor/rules/modus-wc-integration.md](./modus-wc-integration.md) (bootstrap, `setAssetPath`, MCP). For **Angular**, see [modus-angular.md](./modus-angular.md).
+
+Do **not** assume **React** wrapper props (**`onInputChange`**), **`ModusWcThemeProvider`**, or **Next.js** layers—use **`@trimble-oss/moduswebcomponents-vue`** and MCP **`vue`** implementation docs for your **semver**.
+
+## Packages
+
+- **`@trimble-oss/moduswebcomponents`** + **`@trimble-oss/moduswebcomponents-vue`** at **paired** semver (see essentials **Packages** table: **`${MVC}-vue`**).
+- **`npm view`** / **`versions --json`** so base and **`-vue`** stay aligned.
+
+## Bootstrap
+
+1. Register Modus per **`get_modus_implementation_data`** with **`docs_name`:** **`vue`** and **`version`** from **`package.json`** (plugin / **`defineCustomElements`** pattern as documented for your Vue major).
+2. **`defineCustomElements()`** (or equivalent) **before** first render of **`modus-wc-*`** tags.
+3. **`setAssetPath`:** for **Vite**, map to **`import.meta.env.BASE_URL`** + origin when assets break under subpaths — see **Bootstrap and Stencil assets** in [modus-wc-integration.md](./modus-wc-integration.md).
+
+## Custom events in templates
+
+Stencil emits **camelCase** events; in Vue templates use **kebab-case** listeners:
+
+| Host event | Vue (typical) |
+|------------|----------------|
+| **`inputChange`** | **`@input-change`** |
+| **`buttonClick`** | **`@button-click`** |
+
+Verify **`$event.detail`** shape from MCP for each component — do not assume parity with React **`on*`** wrapper props.
+
+## Reading values
+
+- Text-like inputs: read from **`$event.detail?.target?.value`** when MCP specifies **`InputEvent`** — **not** stringifying **`detail`**.
+- **Select:** **`options`** property — **not** slotted **`<option>`** (see [**modus-wc-form-inputs**](../skills/modus-wc-form-inputs/SKILL.md)).
+- Checkbox / switch / radio: **`detail`** is a native **`InputEvent`** in 2.x — read **`$event.detail?.target?.checked`** (not `$event.detail.newValue`, the 1.0 shape).
+
+## Slots and conditional children
+
+- Prefer documented **`slot`** attributes on children. Avoid churn that fights Stencil projection (rapid mount/unmount of slotted roots); align with Vue’s patterns for stable DOM where possible — compare the motivation in [**modus-wc-react-slotted-hosts**](../skills/modus-wc-react-slotted-hosts/SKILL.md).
+
+## Do not import from React-only docs
+
+- Theme integration from **`get_modus_implementation_data`** **`vue`**, not **`ModusWcThemeProvider`**.
+- **Next.js** rules in [modus-nextjs.md](./modus-nextjs.md) apply only to Next/React stacks.
+
+## Docs lookup
+
+- **`get_modus_implementation_data`** — **`vue`**, **`form-inputs`**, **`accessibility`**.
+- **`get_modus_component_data`** — always pass **`version`**.
+
+See [**modus-wc-mcp**](../skills/modus-wc-mcp/SKILL.md).

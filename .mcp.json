@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "modus-docs": {
+      "command": "npx",
+      "args": ["-y", "@trimble-oss/moduswebcomponents-mcp@latest"]
+    },
+    "playwright": {
+      "command": "npx",
+      "args": ["-y", "@playwright/mcp@latest"]
+    }
+  }
+}
