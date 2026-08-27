@@ -55,6 +55,16 @@ Modus components emit the same custom events everywhere; only the binding syntax
 
 Never treat `detail` itself as the value (`String(e.detail)` yields `"[object InputEvent]"`), and never use the removed 1.0 shape `detail.newValue`.
 
+## Code style conventions
+
+Small, framework-agnostic conventions to apply regardless of the target repo's broader style guide:
+
+- Conditional rendering: use `condition && <X />`, not a ternary that returns `null` on one side. Reserve `? A : B` for when both branches render something meaningful.
+- JSX/template props: alphabetize them — keeps the markup scannable and keeps diffs small on review.
+- Hook dependency arrays (`useEffect`, `useMemo`, `useCallback`, or the framework equivalent): alphabetize the entries.
+- CSS: never use `!important`. If a Modus override needs to win, increase selector specificity or scope the rule more tightly instead.
+- Discovery step 7 already covers reusing a form-event-reading helper if one exists — apply the same "reuse before inventing" rule to any shared layout/utility stylesheet (e.g. a flex/gap utility file) the repo already has.
+
 ## Sole page (mandatory)
 
 This template is **not** part of an app with other templates.

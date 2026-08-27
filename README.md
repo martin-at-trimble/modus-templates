@@ -59,13 +59,31 @@ The command will:
   tokens — never static hex, never a second component library, never a guessed icon name.
 - Ship the result as **one page**, wired as the sole route in your app (it won't merge itself
   into an existing nav or template gallery unless you ask).
+- Apply small, framework-agnostic code style conventions (alphabetized props and hook
+  dependency arrays, `&&` over null-ternaries, no `!important`, reusing an existing shared
+  layout/utility stylesheet before inventing one) on top of whatever the target repo's own
+  lint/format conventions already require.
 - Start (or reuse) your dev server and actually exercise the page in a browser — clicking
   menus, opening modals, dragging resizable panes — before calling the job done.
 
+### Available everywhere, not just Claude Code
+
+The command is kept as three synced copies so it works with whichever tool you're using:
+
+| Tool | Path |
+|---|---|
+| Claude Code | [`.claude/commands/modus-template.md`](.claude/commands/modus-template.md) |
+| Cursor | [`.cursor/commands/modus-template.md`](.cursor/commands/modus-template.md) |
+| GitHub Copilot | [`.github/prompts/modus-template.prompt.md`](.github/prompts/modus-template.prompt.md) |
+
+All three carry the same instructions — only the invocation syntax and input-prompting
+mechanism differ per tool. If you edit one, edit all three (each file says so at the top).
+
 ### Using it in your own project
 
-1. Copy [`.claude/commands/modus-template.md`](.claude/commands/modus-template.md) into your
-   project's `.claude/commands/` folder (create it if it doesn't exist).
+1. Copy the command file matching your tool (see table above) into the equivalent folder in
+   your project — e.g. `.claude/commands/`, `.cursor/commands/`, or `.github/prompts/` (create
+   the folder if it doesn't exist).
 2. Make sure your project has `@trimble-oss/moduswebcomponents` (or the matching framework
    wrapper) installed — see the [Modus packages guidance](.claude/rules/modus-essentials.md#packages)
    if not.
@@ -73,5 +91,6 @@ The command will:
    optional but recommended — they encode the Modus conventions (cards, buttons, forms, layout,
    accessibility, per-framework integration) the command follows, and it will read them
    automatically if present.
-4. In Claude Code, run `/modus-template <name> | <title> | [notes] | <browser checks level>` with a screenshot attached.
+4. Run `/modus-template <name> | <title> | [notes] | <browser checks level>` (Claude Code /
+   Cursor) — or trigger the equivalent prompt in Copilot — with a screenshot attached.
 
