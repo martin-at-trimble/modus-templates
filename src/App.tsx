@@ -2,16 +2,19 @@ import { BrowserRouter, Navigate, Route, Routes, useLocation, useNavigate } from
 import { ModusWcLink } from '@trimble-oss/moduswebcomponents-react';
 
 import {
-  GithubDashboardTemplatePage, 
+  GithubDashboardTemplatePage,
   ResizablePanelsPlaygroundTemplatePage,
   CodeEditorTemplatePage,
-  MusicStreamingTemplatePage} from './templates';
+  MusicStreamingTemplatePage,
+  PortalTemplatePage
+} from './templates';
 
 const TEMPLATE_LINKS = [
   { to: '/github-dashboard', label: 'GitHub dashboard' },
   { to: '/resizable-panels', label: 'Resizable panels' },
   { to: '/code-editor', label: 'Code editor' },
   { to: '/music-streaming', label: 'Music streaming' },
+  { to: '/portal', label: 'Portal' },
 ] as const;
 
 function TemplateSwitcher() {
@@ -57,8 +60,9 @@ function App() {
           <Route path="/resizable-panels" element={<ResizablePanelsPlaygroundTemplatePage />} />
           <Route path="/code-editor" element={<CodeEditorTemplatePage />} />
           <Route path="/music-streaming" element={<MusicStreamingTemplatePage />} />
-          <Route path="/" element={<Navigate to="/github-dashboard" replace />} />
-          <Route path="*" element={<Navigate to="/github-dashboard" replace />} />
+          <Route path="/portal" element={<PortalTemplatePage />} />
+          <Route path="/" element={<Navigate to="/portal" replace />} />
+          <Route path="*" element={<Navigate to="/portal" replace />} />
         </Routes>
       </div>
     </BrowserRouter>
