@@ -417,7 +417,7 @@ export default function GithubDashboardPage() {
           {/* ----- Getting started section ----- */}
           <div className="gh-getting-started-header">
             <ModusWcTypography hierarchy="h2" size="xl" weight="semibold" label="Getting started" />
-            <div className="gh-getting-started-progress">
+            <div className="gh-getting-started-meter">
               <ModusWcProgress value={completedCount} max={totalCount} aria-label="Getting started progress" />
               <ModusWcTypography
                 hierarchy="p"
