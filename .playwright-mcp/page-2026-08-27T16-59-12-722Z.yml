@@ -1,0 +1,130 @@
+- generic [ref=e4]:
+  - navigation "Templates" [ref=e5]:
+    - link "GitHub dashboard" [ref=e7] [cursor=pointer]:
+      - /url: /github-dashboard
+  - generic [ref=e8]:
+    - generic [ref=e11]:
+      - generic [ref=e14]:
+        - button "Open menu" [ref=e16] [cursor=pointer]:
+          - generic [ref=e17]: menu
+        - generic [ref=e19]: code
+        - paragraph [ref=e23]: Dashboard
+      - textbox "Search" [ref=e31]:
+        - /placeholder: Type / to search
+      - generic [ref=e34]:
+        - button "Copilot" [ref=e36] [cursor=pointer]:
+          - generic [ref=e37]: ai_stars
+        - button "Create new" [ref=e40] [cursor=pointer]:
+          - generic [ref=e41]: add_circle
+        - button "Notifications" [ref=e44] [cursor=pointer]:
+          - generic [ref=e45]: notifications
+        - button "Pull requests" [ref=e48] [cursor=pointer]:
+          - generic [ref=e49]: compare_arrows
+        - button "Inbox" [ref=e52] [cursor=pointer]:
+          - generic [ref=e53]: email
+        - generic "Your account" [ref=e56]:
+          - button "Your account" [ref=e57] [cursor=pointer]:
+            - generic "ME" [ref=e62]: M
+    - generic [ref=e63]:
+      - complementary [ref=e64]:
+        - generic "martin-at-trimble account menu" [ref=e66]:
+          - button "martin-at-trimble account menu" [ref=e67] [cursor=pointer]:
+            - generic [ref=e68]:
+              - generic "ME" [ref=e72]: M
+              - paragraph [ref=e74]: martin-at-trimble
+              - generic [ref=e75]: caret_down
+        - generic [ref=e77]:
+          - heading "Create your first project" [level=2] [ref=e79]
+          - paragraph [ref=e81]: Ready to start building? Create a repository for a new idea or bring over an existing repository to keep contributing to it.
+          - generic [ref=e82]:
+            - button [ref=e84] [cursor=pointer]:
+              - generic [ref=e85]: add
+              - text: Create repository
+            - button "Import repository" [ref=e88] [cursor=pointer]
+      - main [ref=e89]:
+        - heading "Home" [level=1] [ref=e91]
+        - article [ref=e93]:
+          - generic [ref=e95]:
+            - textbox "Ask anything or type @ to add context" [ref=e97]
+            - generic [ref=e98]:
+              - generic [ref=e99]:
+                - generic "Ask mode" [ref=e101]:
+                  - button "Ask mode" [ref=e102] [cursor=pointer]:
+                    - generic [ref=e103]:
+                      - generic [ref=e104]: chat
+                      - text: Ask
+                      - generic [ref=e106]: caret_down
+                - generic "Repository scope" [ref=e109]:
+                  - button "Repository scope" [ref=e110] [cursor=pointer]:
+                    - generic [ref=e111]:
+                      - generic [ref=e112]: server
+                      - text: All repositories
+                      - generic [ref=e114]: caret_down
+                - button "Add context" [ref=e117] [cursor=pointer]:
+                  - generic [ref=e118]: add_circle
+              - generic [ref=e120]:
+                - button "Send" [disabled]:
+                  - generic: paper_plane
+        - generic [ref=e121]:
+          - button [ref=e123] [cursor=pointer]:
+            - generic [ref=e124]: bug
+            - text: Debug
+          - button [ref=e127] [cursor=pointer]:
+            - generic [ref=e128]: ai_stars
+            - text: Agent
+          - button [ref=e131] [cursor=pointer]:
+            - generic [ref=e132]: circle_outline
+            - text: Create issue
+          - generic "Write code" [ref=e135]:
+            - button "Write code" [ref=e136] [cursor=pointer]:
+              - generic [ref=e137]:
+                - generic [ref=e138]: code
+                - text: Write code
+                - generic [ref=e140]: caret_down
+          - generic "Git" [ref=e143]:
+            - button "Git" [ref=e144] [cursor=pointer]:
+              - generic [ref=e145]:
+                - generic [ref=e146]: file_merge
+                - text: Git
+                - generic [ref=e148]: caret_down
+        - generic "Pull requests" [ref=e152]:
+          - button "Pull requests" [ref=e153] [cursor=pointer]:
+            - generic [ref=e154]:
+              - generic [ref=e155]: compare_arrows
+              - text: Pull requests
+              - generic [ref=e157]: caret_down
+        - article [ref=e160]:
+          - generic [ref=e161]:
+            - button "Dismiss" [ref=e164] [cursor=pointer]:
+              - generic [ref=e165]: close
+            - generic [ref=e167]:
+              - generic [ref=e168]:
+                - status [ref=e170]: Playlist
+                - heading "Github for beginners on YouTube" [level=3] [ref=e172]
+                - paragraph [ref=e174]: Designed to help you master the basics of Github, whether you're new to coding or looking to enhance your version control skills.
+                - button [ref=e176] [cursor=pointer]:
+                  - generic [ref=e177]: play_circle
+                  - text: Start playlist
+              - generic [ref=e179]: play_circle
+        - generic [ref=e183]:
+          - heading "Getting started" [level=2] [ref=e185]
+          - generic [ref=e186]:
+            - progressbar "Getting started progress" [ref=e188]
+            - paragraph [ref=e190]: 1/4 complete
+          - generic "Getting started options" [ref=e193]:
+            - button "Getting started options" [ref=e194] [cursor=pointer]:
+              - generic [ref=e195]: more_horizontal
+        - article [ref=e199]:
+          - generic [ref=e200]:
+            - generic [ref=e201]:
+              - button [ref=e203] [cursor=pointer]:
+                - generic [ref=e204]: expand_more
+                - paragraph [ref=e207]: Create your first code project
+              - generic [ref=e208]:
+                - paragraph [ref=e210]: It's your own space to experiment, learn, and share code with the world.
+                - button [ref=e212] [cursor=pointer]:
+                  - generic [ref=e213]: add
+                  - text: Create project
+            - button [ref=e217] [cursor=pointer]:
+              - generic [ref=e218]: chevron_right
+              - paragraph [ref=e221]: Start a Copilot chat

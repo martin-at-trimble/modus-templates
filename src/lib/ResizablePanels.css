@@ -1,0 +1,77 @@
+/* Resizable 1–4 panel layout (modus-wc-handle). Unlayered so [hidden] wins over utilities. */
+.modus-resizable-panels {
+  --resizable-panel-min-width: 50px;
+  --resizable-panel-min-height: 50px;
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  flex: 1;
+}
+
+.modus-resizable-panels[data-direction='horizontal']:not([data-stacked]) {
+  flex-direction: row;
+}
+
+.modus-resizable-panels[data-direction='vertical']:not([data-stacked]),
+.modus-resizable-panels[data-stacked] {
+  flex-direction: column;
+  overflow: auto;
+}
+
+.modus-resizable-panels[data-stacked] {
+  overflow: auto;
+}
+
+.modus-resizable-panels [hidden] {
+  display: none !important;
+}
+
+.modus-resizable-panels__pane {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.modus-resizable-panels[data-direction='horizontal']:not([data-stacked]) .modus-resizable-panels__pane {
+  min-width: var(--resizable-panel-min-width);
+  flex: 1 1 auto;
+}
+
+.modus-resizable-panels[data-direction='vertical']:not([data-stacked]) .modus-resizable-panels__pane,
+.modus-resizable-panels[data-stacked] .modus-resizable-panels__pane {
+  min-height: var(--resizable-panel-min-height);
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.modus-resizable-panels__pane > * {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+}
+
+.modus-resizable-panels__gutter {
+  display: flex;
+  align-self: stretch;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  /* Without this, touch browsers can start a native scroll/pan gesture on the same
+     touch that begins a drag — the resulting mix of native scroll + JS-driven resize
+     is what produces wildly oversized/collapsed panes on mobile. */
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* The grip is absolutely centered on the handle host — the host must span the gutter. */
+.modus-resizable-panels[data-direction='horizontal']:not([data-stacked]) .modus-resizable-panels__gutter modus-wc-handle {
+  height: 100%;
+}
+
+.modus-resizable-panels[data-direction='vertical']:not([data-stacked]) .modus-resizable-panels__gutter modus-wc-handle {
+  width: 100%;
+}
