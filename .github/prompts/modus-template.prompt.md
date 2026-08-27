@@ -15,6 +15,17 @@ You are a staff frontend engineer building a **copy-paste Modus template page**.
 - **Template name:** ${input:templateName:Template name (e.g. Portal, Inbox, Project home)}
 - **Page title:** ${input:pageTitle:Page title — browser tab + h1}
 - **Optional notes:** ${input:notes:Anything the screenshot doesn't make obvious (optional)}
+- **Verify level:** ${input:verifyLevel:Browser verification — disabled, minimal, or high (optional, default minimal)}
+
+## Browser verification level
+
+Live browser checks (via the Playwright MCP tools) can burn a lot of tokens — full interaction sweeps, drag/resize testing, and console spot-checks all add up, especially over several iterations. Pick the level explicitly rather than always running the deepest pass:
+
+- **`disabled`** — skip the browser entirely. Do a static review of the code you wrote (JSX/markup, event wiring, icon names) instead of step 4 in **Quality bar**. State in your summary that this template was not exercised in a live browser and the user should smoke-test it themselves.
+- **`minimal`** (default) — start/reuse the dev server, navigate to the page once, take a single snapshot or screenshot, and check the console for errors. Skip exhaustively clicking every menu/modal and skip drag/resize testing unless something looks visibly broken in that first pass.
+- **`high`** — run the full **Quality bar** step 4 as written: exercise every header action, menu, primary flow, modal, show/hide toggle, keyboard-focusable row/link, and drag/resize interaction (at every nesting level), plus a narrow-viewport resize pass.
+
+If notes or the user's message say things like "skip playwright", "no browser check", or "don't use Playwright", treat that as `disabled`. If they ask for a thorough or full verification pass, treat that as `high`.
 
 ## Goal
 
@@ -108,9 +119,12 @@ Before you finish:
 1. Look up used components in Modus Docs MCP at the installed version (see discovery step 2).
 2. Validate every new icon `name`.
 3. Match the repo's existing lint/format conventions (don't introduce a style the rest of the codebase doesn't use).
-4. Start or reuse the dev server and **exercise the page in the browser**: header actions, menus, primary flows, modals, show/hide, keyboard-focusable rows/links, and any **drag/resize** interaction (not just that the handle renders — actually drag it, at every nesting level). A screenshot of first paint is not enough.
-5. Console: no errors/warnings from your markup (slot remount errors, invalid list nesting, nested buttons).
-6. Resize: desktop and a narrow viewport if the screenshot implies responsive chrome.
+4. **Browser check — depth per the resolved verify level (see Browser verification level above):**
+   - `disabled`: skip; do a static read-through of your own markup/events/icon names instead, and say in your summary that it wasn't run live.
+   - `minimal`: start or reuse the dev server, navigate once, one snapshot/screenshot, check console for errors. No exhaustive interaction sweep, no drag/resize unless the single pass shows a problem.
+   - `high`: **exercise the page in the browser**: header actions, menus, primary flows, modals, show/hide, keyboard-focusable rows/links, and any **drag/resize** interaction (not just that the handle renders — actually drag it, at every nesting level). A screenshot of first paint is not enough.
+5. Console: no errors/warnings from your markup (slot remount errors, invalid list nesting, nested buttons) — check this at `minimal` or `high`; skip at `disabled`.
+6. Resize: desktop and a narrow viewport if the screenshot implies responsive chrome — only at `high`, or at `minimal` if the first pass looked broken.
 
 ## Do not
 

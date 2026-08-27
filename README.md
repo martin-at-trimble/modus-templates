@@ -40,13 +40,13 @@ against **any** Modus stack (React, Angular, Vue, vanilla); it detects your fram
 installed Modus version before writing anything.
 
 ```
-/modus-template <template name> | <page title> | [optional notes]
+/modus-template <template name> | <page title> | [optional notes] | <browser checks level: disabled | minimal | high>
 ```
 
 Attach a screenshot to the same message. For example:
 
 ```
-/modus-template github-dashboard | GitHub dashboard | keep the left sidebar collapsed by default
+/modus-template github-dashboard | GitHub dashboard | keep the left sidebar collapsed by default | disabled
 ```
 
 The command will:
@@ -73,5 +73,5 @@ The command will:
    optional but recommended — they encode the Modus conventions (cards, buttons, forms, layout,
    accessibility, per-framework integration) the command follows, and it will read them
    automatically if present.
-4. In Claude Code, run `/modus-template <name> | <title> | [notes]` with a screenshot attached.
+4. In Claude Code, run `/modus-template <name> | <title> | [notes] | <browser checks level>` with a screenshot attached.
 
