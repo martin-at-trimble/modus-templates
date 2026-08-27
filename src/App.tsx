@@ -1,14 +1,17 @@
 import { BrowserRouter, Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { ModusWcLink } from '@trimble-oss/moduswebcomponents-react';
 
-import GithubDashboardPage from './templates/GithubDashboard/GithubDashboardPage';
-import ResizablePanelsPlaygroundPage from './templates/ResizablePanelsPlayground';
-import CodeEditorPage from './templates/CodeEditor';
+import {
+  GithubDashboardTemplatePage, 
+  ResizablePanelsPlaygroundTemplatePage,
+  CodeEditorTemplatePage,
+  MusicStreamingTemplatePage} from './templates';
 
 const TEMPLATE_LINKS = [
   { to: '/github-dashboard', label: 'GitHub dashboard' },
   { to: '/resizable-panels', label: 'Resizable panels' },
   { to: '/code-editor', label: 'Code editor' },
+  { to: '/music-streaming', label: 'Music streaming' },
 ] as const;
 
 function TemplateSwitcher() {
@@ -50,9 +53,10 @@ function App() {
       <div className="app-templates">
         <TemplateSwitcher />
         <Routes>
-          <Route path="/github-dashboard" element={<GithubDashboardPage />} />
-          <Route path="/resizable-panels" element={<ResizablePanelsPlaygroundPage />} />
-          <Route path="/code-editor" element={<CodeEditorPage />} />
+          <Route path="/github-dashboard" element={<GithubDashboardTemplatePage />} />
+          <Route path="/resizable-panels" element={<ResizablePanelsPlaygroundTemplatePage />} />
+          <Route path="/code-editor" element={<CodeEditorTemplatePage />} />
+          <Route path="/music-streaming" element={<MusicStreamingTemplatePage />} />
           <Route path="/" element={<Navigate to="/github-dashboard" replace />} />
           <Route path="*" element={<Navigate to="/github-dashboard" replace />} />
         </Routes>

@@ -13,7 +13,7 @@ import {
 import type { ITab } from '@trimble-oss/moduswebcomponents';
 
 import { readInputString } from '../../lib/modusFormEvents';
-import { ResizablePanels } from '../../lib/ResizablePanels';
+import { ResizablePanels } from '../../patterns/ResizablePanels';
 import {
   initialCode,
   initialTestCases,

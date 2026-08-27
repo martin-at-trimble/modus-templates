@@ -1,0 +1,436 @@
+.musicstreaming-page [hidden],
+.musicstreaming-page .musicstreaming-toggle[hidden] {
+  display: none !important;
+}
+
+.musicstreaming-page {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.musicstreaming-page .musicstreaming-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.musicstreaming-page .musicstreaming-muted {
+  color: var(--modus-wc-color-base-content-low-contrast);
+}
+
+.musicstreaming-page .musicstreaming-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--modus-wc-spacing-sm, 0.5rem);
+  padding-block: var(--modus-wc-spacing-sm, 0.5rem);
+  flex-shrink: 0;
+}
+
+.musicstreaming-page .musicstreaming-header-start,
+.musicstreaming-page .musicstreaming-header-end {
+  display: flex;
+  align-items: center;
+  gap: var(--modus-wc-spacing-sm, 0.5rem);
+}
+
+.musicstreaming-page .musicstreaming-header-center {
+  display: flex;
+  flex: 1 1 18rem;
+  align-items: center;
+  justify-content: center;
+  gap: var(--modus-wc-spacing-sm, 0.5rem);
+  min-width: 0;
+}
+
+.musicstreaming-page .musicstreaming-mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--modus-wc-border-radius-full, 9999px);
+  background-color: var(--modus-wc-color-primary);
+  color: var(--modus-wc-color-primary-content, var(--modus-wc-color-base-100));
+}
+
+.musicstreaming-page .musicstreaming-header-action.modus-wc-btn,
+.musicstreaming-page .musicstreaming-header-action .modus-wc-btn {
+  background-color: var(--modus-wc-color-base-200);
+  border-color: transparent;
+  color: var(--modus-wc-color-base-content);
+}
+
+.musicstreaming-page .musicstreaming-header-search {
+  flex: 1;
+  min-width: 0;
+  max-width: 35rem;
+}
+
+.musicstreaming-page .musicstreaming-columns {
+  flex: 1;
+  min-height: 0;
+  padding-bottom: var(--modus-wc-spacing-sm, 0.5rem);
+}
+
+.musicstreaming-page
+  .modus-resizable-panels[data-direction='horizontal']:not([data-stacked])
+  > .modus-resizable-panels__pane--start {
+  flex: 0 0 auto;
+  width: 20rem;
+}
+
+.musicstreaming-page
+  .modus-resizable-panels[data-direction='horizontal']:not([data-stacked])[data-count='3']
+  .modus-resizable-panels__pane--end {
+  flex: 0 0 auto;
+  width: 20rem;
+}
+
+/* Narrow viewports: panels switch to a vertical stack (see NARROW_LAYOUT_QUERY) — give each
+   an even default split instead of the shared ResizablePanels content-based `auto` basis.
+   No extra min-height here: it would exceed the viewport with 3 stacked panes and pin every
+   pane at its floor, leaving the drag handles no slack to redistribute (undraggable). */
+.musicstreaming-page
+  .modus-resizable-panels[data-direction='vertical']:not([data-stacked])
+  > .modus-resizable-panels__pane {
+  flex: 1 1 0;
+}
+
+.musicstreaming-page .musicstreaming-panel {
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+
+.musicstreaming-page .musicstreaming-main,
+.musicstreaming-page .musicstreaming-now {
+  display: flex;
+  min-height: 0;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.musicstreaming-page .musicstreaming-main > modus-wc-card,
+.musicstreaming-page .musicstreaming-now > modus-wc-card,
+.musicstreaming-page .modus-resizable-panels__pane modus-wc-card {
+  height: 100%;
+}
+
+.musicstreaming-page modus-wc-card [slot='title'] {
+  display: flex !important;
+  align-items: center !important;
+  width: 100% !important;
+  min-width: 0 !important;
+}
+
+.musicstreaming-page .musicstreaming-library-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+}
+
+.musicstreaming-page .musicstreaming-library-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--modus-wc-spacing-2xs, 0.25rem);
+}
+
+.musicstreaming-page .musicstreaming-library-list > li {
+  display: block;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.musicstreaming-page .musicstreaming-library-list > li::marker {
+  content: none;
+}
+
+.musicstreaming-page .musicstreaming-library-row {
+  display: flex;
+  align-items: center;
+  gap: var(--modus-wc-spacing-sm, 0.5rem);
+  padding: var(--modus-wc-spacing-sm, 0.5rem);
+  border-radius: var(--modus-wc-border-radius, 0.5rem);
+  text-decoration: none;
+  color: inherit;
+}
+
+.musicstreaming-page .musicstreaming-library-row:hover,
+.musicstreaming-page .musicstreaming-library-row--active {
+  background-color: var(--modus-wc-color-base-200);
+}
+
+.musicstreaming-page .musicstreaming-library-row:focus-visible {
+  outline: 2px solid var(--modus-wc-color-primary);
+  outline-offset: 2px;
+}
+
+.musicstreaming-page .musicstreaming-library-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--modus-wc-spacing-2xs, 0.25rem);
+  color: var(--modus-wc-color-base-content-low-contrast);
+}
+
+.musicstreaming-page .musicstreaming-thumb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  flex-shrink: 0;
+  border-radius: var(--modus-wc-border-radius, 0.5rem);
+  color: var(--modus-wc-color-base-100);
+}
+
+.musicstreaming-page .musicstreaming-thumb--liked {
+  background-color: var(--modus-wc-color-primary);
+}
+
+.musicstreaming-page .musicstreaming-thumb--episodes {
+  background-color: var(--modus-wc-color-success);
+}
+
+.musicstreaming-page .musicstreaming-thumb--mix {
+  background-color: var(--modus-wc-color-secondary);
+}
+
+.musicstreaming-page .musicstreaming-thumb--artist {
+  background-color: var(--modus-wc-color-tertiary, var(--modus-wc-color-base-content));
+}
+
+.musicstreaming-page .musicstreaming-thumb--album {
+  background-color: var(--modus-wc-color-warning);
+}
+
+.musicstreaming-page .musicstreaming-thumb--radar {
+  background-color: var(--modus-wc-color-danger, var(--modus-wc-color-error));
+}
+
+.musicstreaming-page .musicstreaming-thumb--weekly {
+  background-color: var(--modus-wc-color-primary);
+  opacity: 0.85;
+}
+
+.musicstreaming-page .musicstreaming-thumb--user {
+  background-color: var(--modus-wc-color-base-content);
+}
+
+.musicstreaming-page .musicstreaming-miniplayer {
+  display: flex;
+  align-items: center;
+  gap: var(--modus-wc-spacing-sm, 0.5rem);
+  padding-top: var(--modus-wc-spacing-sm, 0.5rem);
+  border-top: 1px solid var(--modus-wc-color-base-200);
+}
+
+.musicstreaming-page .musicstreaming-playlist {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: min-content;
+}
+
+.musicstreaming-page .musicstreaming-hero {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--modus-wc-spacing-md, 0.75rem);
+  padding: var(--modus-wc-spacing-md, 0.75rem);
+  border-radius: var(--modus-wc-border-radius, 0.5rem);
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  background: linear-gradient(
+    180deg,
+    color-mix(in oklab, var(--modus-wc-color-primary) 45%, var(--modus-wc-color-base-100)),
+    var(--modus-wc-color-base-100)
+  );
+}
+
+.musicstreaming-page .musicstreaming-hero-copy {
+  flex: 1 1 12rem;
+  min-width: 0;
+}
+
+.musicstreaming-page .musicstreaming-hero-art {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 8rem;
+  height: 8rem;
+  flex-shrink: 0;
+  border-radius: var(--modus-wc-border-radius, 0.5rem);
+  color: var(--modus-wc-color-base-100);
+}
+
+.musicstreaming-page .musicstreaming-hero-title {
+  margin-block: 0;
+}
+
+.musicstreaming-page .musicstreaming-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--modus-wc-spacing-sm, 0.5rem);
+  padding-block: var(--modus-wc-spacing-md, 0.75rem);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.musicstreaming-page .musicstreaming-title-cell,
+.musicstreaming-page .musicstreaming-duration-cell,
+.musicstreaming-page .musicstreaming-title-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--modus-wc-spacing-sm, 0.5rem);
+  min-width: 0;
+}
+
+.musicstreaming-page .musicstreaming-title-stack {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.musicstreaming-page .musicstreaming-playing-title {
+  color: var(--modus-wc-color-primary);
+}
+
+.musicstreaming-page .musicstreaming-index {
+  color: var(--modus-wc-color-base-content-low-contrast);
+}
+
+.musicstreaming-page .musicstreaming-now-art {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-height: 300px;
+  aspect-ratio: 1;
+  border-radius: var(--modus-wc-border-radius, 0.5rem);
+  color: var(--modus-wc-color-base-100);
+}
+
+.musicstreaming-page .musicstreaming-video-row {
+  display: flex;
+  align-items: center;
+  gap: var(--modus-wc-spacing-sm, 0.5rem);
+  text-decoration: none;
+  color: inherit;
+  min-width: 0;
+}
+
+.musicstreaming-page .musicstreaming-video-row:focus-visible {
+  outline: 2px solid var(--modus-wc-color-primary);
+  outline-offset: 2px;
+}
+
+.musicstreaming-page .musicstreaming-footer {
+  display: grid;
+  grid-template-columns: minmax(12rem, 1fr) minmax(16rem, 2fr) minmax(12rem, 1fr);
+  align-items: center;
+  gap: var(--modus-wc-spacing-sm, 0.5rem);
+  padding-block: var(--modus-wc-spacing-sm, 0.5rem);
+  flex-shrink: 0;
+  border-top: 1px solid var(--modus-wc-color-base-200);
+  background-color: var(--modus-wc-color-base-page);
+}
+
+.musicstreaming-page .musicstreaming-now-track,
+.musicstreaming-page .musicstreaming-extras,
+.musicstreaming-page .musicstreaming-volume,
+.musicstreaming-page .musicstreaming-progress {
+  display: flex;
+  align-items: center;
+  gap: var(--modus-wc-spacing-sm, 0.5rem);
+  min-width: 0;
+}
+
+.musicstreaming-page .musicstreaming-extras {
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.musicstreaming-page .musicstreaming-transport {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--modus-wc-spacing-sm, 0.5rem);
+  min-width: 0;
+}
+
+.musicstreaming-page .musicstreaming-progress {
+  width: 100%;
+}
+
+.musicstreaming-page .musicstreaming-progress modus-wc-slider {
+  flex: 1 1 auto;
+  min-width: 6rem;
+  width: auto;
+  display: block;
+}
+
+.musicstreaming-page .musicstreaming-slider {
+  flex: 1;
+  min-width: 6rem;
+  margin: 0;
+}
+
+.musicstreaming-page .musicstreaming-progress .musicstreaming-slider {
+  display: block;
+  width: 100%;
+  min-width: 0;
+}
+
+.musicstreaming-page .musicstreaming-slider--volume {
+  max-width: 7rem;
+  min-width: 4rem;
+}
+
+@media (max-width: 1023px) {
+  .musicstreaming-page .musicstreaming-hero {
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: var(--modus-wc-spacing-sm, 0.5rem);
+    padding: var(--modus-wc-spacing-sm, 0.5rem);
+  }
+
+  .musicstreaming-page .musicstreaming-hero-art {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+
+  .musicstreaming-page .musicstreaming-hero-title {
+    font-size: var(--modus-wc-font-size-xl, 1.125rem);
+    line-height: 1.3;
+  }
+
+  .musicstreaming-page .musicstreaming-actions {
+    padding-block: var(--modus-wc-spacing-sm, 0.5rem);
+  }
+
+  .musicstreaming-page .musicstreaming-footer {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .musicstreaming-page .musicstreaming-extras {
+    justify-content: center;
+  }
+}

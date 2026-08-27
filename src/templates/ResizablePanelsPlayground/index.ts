@@ -1,1 +1,1 @@
-export { default } from './ResizablePanelsPlaygroundPage';
+export { default as ResizablePanelsPlaygroundTemplatePage } from './ResizablePanelsPlaygroundPage';

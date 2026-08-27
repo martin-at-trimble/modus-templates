@@ -1,1 +1,1 @@
-export { default as GithubDashboardPage } from './GithubDashboardPage';
+export { default as GithubDashboardTemplatePage } from './GithubDashboardPage';
