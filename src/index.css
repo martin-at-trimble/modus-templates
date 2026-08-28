@@ -35,10 +35,14 @@ body {
 
 .app-templates {
   display: flex;
-  flex-direction: column;
   flex: 1;
+  flex-direction: column;
   min-height: 0;
   min-width: 0;
+}
+
+.app-shell modus-wc-navbar [slot='center'][hidden] {
+  display: none;
 }
 
 .template-switcher {

@@ -3,3 +3,4 @@ export * from './ResizablePanelsPlayground';
 export * from './CodeEditor';
 export * from './MusicStreaming';
 export * from './Portal';
+export * from './UsageDashboard';

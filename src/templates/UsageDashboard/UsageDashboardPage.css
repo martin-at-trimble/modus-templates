@@ -1,0 +1,215 @@
+.usage-dashboard-page.app-shell {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+  background-color: var(--modus-wc-color-base-page);
+}
+
+.usage-dashboard-navbar-host {
+  flex-shrink: 0;
+  position: relative;
+  z-index: 120;
+}
+
+.usage-dashboard-navbar-start {
+  align-items: center;
+  display: flex;
+  gap: var(--modus-wc-spacing-sm, 0.5rem);
+}
+
+.usage-dashboard-navbar-center {
+  align-items: center;
+  display: flex;
+  min-width: 0;
+}
+
+.usage-dashboard-body-row {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Absolute (not viewport-fixed) so the rail stays below the navbar when a template switcher sits above this page. */
+.usage-dashboard-rail-wrapper {
+  flex-shrink: 0;
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  z-index: 130;
+}
+
+.usage-dashboard-rail-wrapper--push.usage-dashboard-rail-wrapper--collapsed {
+  overflow: hidden;
+  width: 4rem;
+}
+
+.usage-dashboard-rail-wrapper--push.usage-dashboard-rail-wrapper--expanded {
+  overflow: visible;
+  width: 16rem;
+}
+
+.usage-dashboard-rail-wrapper--overlay.usage-dashboard-rail-wrapper--collapsed {
+  overflow: hidden;
+  pointer-events: none;
+  width: 0;
+}
+
+.usage-dashboard-rail-wrapper--overlay.usage-dashboard-rail-wrapper--expanded {
+  overflow: visible;
+  pointer-events: auto;
+  width: 16rem;
+}
+
+.usage-dashboard-main {
+  background-color: var(--modus-wc-color-base-page);
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  overflow: auto;
+}
+
+.usage-dashboard-main-inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--modus-wc-spacing-md, 1rem);
+  margin-inline: auto;
+  max-width: 80rem;
+  min-width: 0;
+  padding: var(--modus-wc-spacing-md, 1rem);
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .usage-dashboard-main-inner {
+    padding: var(--modus-wc-spacing-lg, 1.5rem);
+  }
+}
+
+@media (min-width: 1024px) {
+  .usage-dashboard-main {
+    margin-left: 4rem;
+  }
+
+  .usage-dashboard-page.app-shell:has(.usage-dashboard-rail-wrapper--push.usage-dashboard-rail-wrapper--expanded)
+    .usage-dashboard-main {
+    margin-left: 16rem;
+  }
+}
+
+@media (max-width: 1023px) {
+  .usage-dashboard-main {
+    margin-left: 0;
+  }
+}
+
+.usage-dashboard-page-title {
+  margin: 0;
+}
+
+.usage-dashboard-monthly {
+  display: flex;
+  flex-direction: column;
+  gap: var(--modus-wc-spacing-sm, 0.5rem);
+}
+
+.usage-dashboard-monthly-header {
+  align-items: baseline;
+  display: flex;
+  justify-content: space-between;
+}
+
+.usage-dashboard-muted {
+  color: var(--modus-wc-color-base-content-low-contrast);
+  margin: 0;
+}
+
+.usage-dashboard-filters {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--modus-wc-spacing-sm, 0.5rem);
+  justify-content: space-between;
+}
+
+.usage-dashboard-period-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--modus-wc-spacing-2xs, 0.25rem);
+}
+
+.usage-dashboard-summary-grid {
+  display: grid;
+  gap: var(--modus-wc-spacing-sm, 0.5rem);
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+@media (min-width: 768px) {
+  .usage-dashboard-summary-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.usage-dashboard-summary-grid modus-wc-card article {
+  background-color: var(--modus-wc-color-base-100);
+}
+
+.usage-dashboard-chart-title,
+.usage-dashboard-table-title {
+  align-items: flex-start;
+  display: flex;
+  gap: var(--modus-wc-spacing-md, 1rem);
+  justify-content: space-between;
+  width: 100%;
+}
+
+.usage-dashboard-chart-heading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--modus-wc-spacing-2xs, 0.25rem);
+  min-width: 0;
+}
+
+.usage-dashboard-chart-controls {
+  align-items: flex-end;
+  display: flex;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  gap: var(--modus-wc-spacing-sm, 0.5rem);
+}
+
+.usage-dashboard-chart-wrap {
+  height: 280px;
+  min-width: 0;
+  width: 100%;
+}
+
+.usage-dashboard-table-wrap {
+  overflow-x: auto;
+  width: 100%;
+}
+
+.usage-dashboard-cost-cell {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--modus-wc-spacing-2xs, 0.25rem);
+}
+
+.usage-dashboard-page modus-wc-side-navigation modus-wc-menu-item {
+  margin-block: var(--modus-wc-spacing-2xs, 0.25rem);
+  padding-inline: 0;
+}
+
+.usage-dashboard-page modus-wc-card [slot='title'] {
+  align-items: center;
+  display: flex;
+  min-width: 0;
+  width: 100%;
+}

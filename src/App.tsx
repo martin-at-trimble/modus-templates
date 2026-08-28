@@ -2,11 +2,12 @@ import { BrowserRouter, Navigate, Route, Routes, useLocation, useNavigate } from
 import { ModusWcLink } from '@trimble-oss/moduswebcomponents-react';
 
 import {
-  GithubDashboardTemplatePage,
-  ResizablePanelsPlaygroundTemplatePage,
   CodeEditorTemplatePage,
+  GithubDashboardTemplatePage,
   MusicStreamingTemplatePage,
-  PortalTemplatePage
+  PortalTemplatePage,
+  ResizablePanelsPlaygroundTemplatePage,
+  UsageDashboardTemplatePage,
 } from './templates';
 
 const TEMPLATE_LINKS = [
@@ -15,6 +16,7 @@ const TEMPLATE_LINKS = [
   { to: '/code-editor', label: 'Code editor' },
   { to: '/music-streaming', label: 'Music streaming' },
   { to: '/portal', label: 'Portal' },
+  { to: '/usage-dashboard', label: 'Usage dashboard' },
 ] as const;
 
 function TemplateSwitcher() {
@@ -22,21 +24,21 @@ function TemplateSwitcher() {
   const navigate = useNavigate();
 
   return (
-    <nav className="template-switcher px-4 sm:px-6" aria-label="Templates">
+    <nav aria-label="Templates" className="template-switcher px-4 sm:px-6">
       {TEMPLATE_LINKS.map(({ to, label }) => {
         const isActive = location.pathname === to;
         return (
           <ModusWcLink
             key={to}
-            href={to}
+            aria-current={isActive ? 'page' : undefined}
             color="inherit"
-            underline="none"
             customClass={
               isActive
                 ? 'template-switcher-link template-switcher-link--active'
                 : 'template-switcher-link'
             }
-            aria-current={isActive ? 'page' : undefined}
+            href={to}
+            underline="none"
             onClick={(event) => {
               event.preventDefault();
               navigate(to);
@@ -56,13 +58,14 @@ function App() {
       <div className="app-templates">
         <TemplateSwitcher />
         <Routes>
-          <Route path="/github-dashboard" element={<GithubDashboardTemplatePage />} />
-          <Route path="/resizable-panels" element={<ResizablePanelsPlaygroundTemplatePage />} />
-          <Route path="/code-editor" element={<CodeEditorTemplatePage />} />
-          <Route path="/music-streaming" element={<MusicStreamingTemplatePage />} />
-          <Route path="/portal" element={<PortalTemplatePage />} />
-          <Route path="/" element={<Navigate to="/portal" replace />} />
-          <Route path="*" element={<Navigate to="/portal" replace />} />
+          <Route element={<GithubDashboardTemplatePage />} path="/github-dashboard" />
+          <Route element={<ResizablePanelsPlaygroundTemplatePage />} path="/resizable-panels" />
+          <Route element={<CodeEditorTemplatePage />} path="/code-editor" />
+          <Route element={<MusicStreamingTemplatePage />} path="/music-streaming" />
+          <Route element={<PortalTemplatePage />} path="/portal" />
+          <Route element={<UsageDashboardTemplatePage />} path="/usage-dashboard" />
+          <Route element={<Navigate replace to="/portal" />} path="/" />
+          <Route element={<Navigate replace to="/portal" />} path="*" />
         </Routes>
       </div>
     </BrowserRouter>
