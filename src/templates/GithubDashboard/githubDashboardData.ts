@@ -55,9 +55,6 @@ export const quickActionsRowOne: QuickAction[] = [
       { label: 'Create branch', value: 'branch' },
     ],
   },
-];
-
-export const quickActionsRowTwo: QuickAction[] = [
   {
     id: 'pull-requests',
     label: 'Pull requests',

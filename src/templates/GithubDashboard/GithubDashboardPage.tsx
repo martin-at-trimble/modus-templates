@@ -19,7 +19,6 @@ import {
   askModeOptions,
   gettingStartedItems,
   quickActionsRowOne,
-  quickActionsRowTwo,
   repoScopeOptions,
 } from './githubDashboardData';
 import './GithubDashboardPage.css';
@@ -382,34 +381,6 @@ export default function GithubDashboardPage() {
                 </ModusWcButton>
               ),
             )}
-          </div>
-          <div className="gh-quick-actions gh-quick-actions-secondary">
-            {quickActionsRowTwo.map((action) => (
-              <ModusWcDropdownMenu
-                key={action.id}
-                buttonAriaLabel={action.label}
-                buttonVariant="outlined"
-                buttonColor="tertiary"
-                buttonSize="sm"
-                menuPlacement="bottom-start"
-              >
-                <div slot="button" className="gh-dropdown-trigger-content">
-                  <ModusWcIcon name={action.icon} size="xs" decorative />
-                  {action.label}
-                  <ModusWcIcon name="caret_down" size="xs" decorative />
-                </div>
-                <div slot="menu">
-                  {action.menuOptions?.map((option) => (
-                    <ModusWcMenuItem
-                      key={option.value}
-                      label={option.label}
-                      value={option.value}
-                      onItemSelect={closeDropdownFromEvent}
-                    />
-                  ))}
-                </div>
-              </ModusWcDropdownMenu>
-            ))}
           </div>
 
           {/* ----- Playlist / video card ----- */}
