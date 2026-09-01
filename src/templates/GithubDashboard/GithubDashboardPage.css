@@ -11,7 +11,9 @@
 .gh-page {
   display: flex;
   flex-direction: column;
-  min-height: 100dvh;
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
   background-color: var(--modus-wc-color-base-page);
 }
 
@@ -19,13 +21,68 @@
   position: sticky;
   top: 0;
   z-index: 20;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .gh-navbar-brand {
   display: flex;
   min-width: 0;
+  flex: 0 1 auto;
   align-items: center;
   gap: 0.5rem;
+  overflow: hidden;
+}
+
+.gh-navbar-breadcrumb-wrap {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.gh-navbar-breadcrumb {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.gh-navbar-search {
+  display: flex;
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
+  max-width: 26rem;
+  align-items: center;
+  overflow: hidden;
+}
+
+.gh-navbar-search modus-wc-text-input {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.gh-navbar-end {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.gh-navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+@media (max-width: 1023px) {
+  .gh-navbar-action--tablet-hide {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .gh-navbar-actions {
+    display: none;
+  }
 }
 
 .gh-navbar-brand-mark {
@@ -38,30 +95,6 @@
   background-color: var(--modus-wc-color-base-content);
   color: var(--modus-wc-color-base-page);
   flex-shrink: 0;
-}
-
-.gh-navbar-breadcrumb {
-  white-space: nowrap;
-}
-
-.gh-navbar-search {
-  display: flex;
-  width: 100%;
-  min-width: 0;
-  max-width: 26rem;
-  align-items: center;
-}
-
-@media (max-width: 767px) {
-  .gh-navbar-search {
-    display: none;
-  }
-}
-
-.gh-navbar-end {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
 }
 
 .gh-navbar-avatar-trigger {

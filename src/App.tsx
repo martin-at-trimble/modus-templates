@@ -4,6 +4,7 @@ import { ModusWcLink } from '@trimble-oss/moduswebcomponents-react';
 import {
   CodeEditorTemplatePage,
   GithubDashboardTemplatePage,
+  InboxTemplatePage,
   MusicStreamingTemplatePage,
   PortalTemplatePage,
   ResizablePanelsPlaygroundTemplatePage,
@@ -17,6 +18,7 @@ const TEMPLATE_LINKS = [
   { to: '/music-streaming', label: 'Music streaming' },
   { to: '/portal', label: 'Portal' },
   { to: '/usage-dashboard', label: 'Usage dashboard' },
+  { to: '/inbox', label: 'Inbox' },
 ] as const;
 
 function TemplateSwitcher() {
@@ -64,6 +66,7 @@ function App() {
           <Route element={<MusicStreamingTemplatePage />} path="/music-streaming" />
           <Route element={<PortalTemplatePage />} path="/portal" />
           <Route element={<UsageDashboardTemplatePage />} path="/usage-dashboard" />
+          <Route element={<InboxTemplatePage />} path="/inbox" />
           <Route element={<Navigate replace to="/portal" />} path="/" />
           <Route element={<Navigate replace to="/portal" />} path="*" />
         </Routes>

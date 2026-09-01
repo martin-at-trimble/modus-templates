@@ -21,7 +21,11 @@ import {
   quickActionsRowOne,
   repoScopeOptions,
 } from './githubDashboardData';
+import { useMediaQuery } from '../../lib/useMediaQuery';
 import './GithubDashboardPage.css';
+
+const NAVBAR_WIDE_MIN_PX = 768;
+const NAVBAR_TABLET_MIN_PX = 1024;
 
 // Reads the typed/selected string value out of a Modus `inputChange` event.
 function readInputString(e: CustomEvent<InputEvent>): string {
@@ -40,6 +44,9 @@ function closeDropdownFromEvent(e: CustomEvent<{ value: string }>) {
 }
 
 export default function GithubDashboardPage() {
+  const isWideNavbar = useMediaQuery(`(min-width: ${NAVBAR_WIDE_MIN_PX}px)`);
+  const isTabletNavbar = useMediaQuery(`(min-width: ${NAVBAR_TABLET_MIN_PX}px)`);
+
   useEffect(() => {
     document.title = 'Github';
   }, []);
@@ -71,6 +78,7 @@ export default function GithubDashboardPage() {
       {/* ===== Navbar: hamburger, brand mark, breadcrumb, search, action icons, avatar ===== */}
       <ModusWcNavbar
         className="gh-navbar"
+        condensed={!isWideNavbar}
         visibility={{
           logo: false,
           mainMenu: false,
@@ -96,16 +104,18 @@ export default function GithubDashboardPage() {
           <span className="gh-navbar-brand-mark" aria-hidden="true">
             <ModusWcIcon name="code" size="sm" decorative />
           </span>
-          <ModusWcTypography
-            hierarchy="p"
-            size="md"
-            weight="semibold"
-            customClass="gh-navbar-breadcrumb gh-inline-text"
-            label="Dashboard"
-          />
+          <div className="gh-navbar-breadcrumb-wrap" hidden={!isWideNavbar}>
+            <ModusWcTypography
+              hierarchy="p"
+              size="md"
+              weight="semibold"
+              customClass="gh-navbar-breadcrumb gh-inline-text"
+              label="Dashboard"
+            />
+          </div>
         </div>
 
-        <div slot="center" className="gh-navbar-search">
+        <div className="gh-navbar-search" hidden={!isTabletNavbar} slot="center">
           <ModusWcTextInput
             aria-label="Search"
             size="sm"
@@ -117,51 +127,69 @@ export default function GithubDashboardPage() {
         </div>
 
         <div slot="end" className="gh-navbar-end">
-          <ModusWcButton
-            variant="borderless"
-            color="tertiary"
-            shape="square"
-            size="md"
-            buttonAriaLabel="Copilot"
-          >
-            <ModusWcIcon name="ai_stars" decorative />
-          </ModusWcButton>
-          <ModusWcButton
-            variant="borderless"
-            color="tertiary"
-            shape="square"
-            size="md"
-            buttonAriaLabel="Create new"
-          >
-            <ModusWcIcon name="add_circle" decorative />
-          </ModusWcButton>
-          <ModusWcButton
-            variant="borderless"
-            color="tertiary"
-            shape="square"
-            size="md"
-            buttonAriaLabel="Notifications"
-          >
-            <ModusWcIcon name="notifications" decorative />
-          </ModusWcButton>
-          <ModusWcButton
-            variant="borderless"
-            color="tertiary"
-            shape="square"
-            size="md"
-            buttonAriaLabel="Pull requests"
-          >
-            <ModusWcIcon name="compare_arrows" decorative />
-          </ModusWcButton>
-          <ModusWcButton
-            variant="borderless"
-            color="tertiary"
-            shape="square"
-            size="md"
-            buttonAriaLabel="Inbox"
-          >
-            <ModusWcIcon name="email" decorative />
-          </ModusWcButton>
+          <div className="gh-navbar-actions">
+            <ModusWcButton
+              className="gh-navbar-action gh-navbar-action--tablet-hide"
+              variant="borderless"
+              color="tertiary"
+              shape="square"
+              size="md"
+              buttonAriaLabel="Copilot"
+            >
+              <ModusWcIcon name="ai_stars" decorative />
+            </ModusWcButton>
+            <ModusWcButton
+              className="gh-navbar-action gh-navbar-action--tablet-hide"
+              variant="borderless"
+              color="tertiary"
+              shape="square"
+              size="md"
+              buttonAriaLabel="Create new"
+            >
+              <ModusWcIcon name="add_circle" decorative />
+            </ModusWcButton>
+            <ModusWcButton
+              className="gh-navbar-action"
+              variant="borderless"
+              color="tertiary"
+              shape="square"
+              size="md"
+              buttonAriaLabel="Notifications"
+            >
+              <ModusWcIcon name="notifications" decorative />
+            </ModusWcButton>
+            <ModusWcButton
+              className="gh-navbar-action"
+              variant="borderless"
+              color="tertiary"
+              shape="square"
+              size="md"
+              buttonAriaLabel="Pull requests"
+            >
+              <ModusWcIcon name="compare_arrows" decorative />
+            </ModusWcButton>
+            <ModusWcButton
+              className="gh-navbar-action gh-navbar-action--tablet-hide"
+              variant="borderless"
+              color="tertiary"
+              shape="square"
+              size="md"
+              buttonAriaLabel="Inbox"
+            >
+              <ModusWcIcon name="email" decorative />
+            </ModusWcButton>
+          </div>
+          {!isWideNavbar ? (
+            <ModusWcButton
+              buttonAriaLabel="Search"
+              color="tertiary"
+              shape="square"
+              size="md"
+              variant="borderless"
+            >
+              <ModusWcIcon decorative name="search" />
+            </ModusWcButton>
+          ) : null}
           <ModusWcDropdownMenu
             buttonAriaLabel="Your account"
             buttonVariant="borderless"

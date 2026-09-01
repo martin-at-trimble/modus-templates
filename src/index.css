@@ -41,8 +41,35 @@ body {
   min-width: 0;
 }
 
-.app-shell modus-wc-navbar [slot='center'][hidden] {
-  display: none;
+.app-shell modus-wc-navbar [slot='center'][hidden],
+.app-templates modus-wc-navbar [slot='center'][hidden] {
+  display: none !important;
+}
+
+/* Template navbars: constrain slots so start/center/end do not overlap on narrow viewports */
+.app-templates modus-wc-navbar {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.app-templates modus-wc-navbar [slot='start'],
+.app-templates modus-wc-navbar [slot='center'],
+.app-templates modus-wc-navbar [slot='end'] {
+  min-width: 0;
+}
+
+.app-templates modus-wc-navbar [slot='start'] {
+  flex: 0 1 auto;
+  overflow: hidden;
+}
+
+.app-templates modus-wc-navbar [slot='center'] {
+  flex: 1 1 auto;
+  overflow: hidden;
+}
+
+.app-templates modus-wc-navbar [slot='end'] {
+  flex: 0 0 auto;
 }
 
 .template-switcher {
@@ -51,8 +78,14 @@ body {
   align-items: center;
   gap: var(--modus-wc-spacing-sm, 0.5rem);
   padding-block: var(--modus-wc-spacing-2xs, 0.25rem);
+  padding-inline: var(--modus-wc-spacing-sm, 0.5rem);
   border-bottom: 1px solid var(--modus-wc-color-base-200);
   background-color: var(--modus-wc-color-base-page);
+  overflow-x: auto;
+  overflow-y: hidden;
+  flex-wrap: nowrap;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
 }
 
 .template-switcher-link {
@@ -61,6 +94,8 @@ body {
   color: var(--modus-wc-color-base-content);
   text-decoration: none;
   font-size: var(--modus-wc-font-size-sm, 0.875rem);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .template-switcher-link:hover,

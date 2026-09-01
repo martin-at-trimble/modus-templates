@@ -42,7 +42,7 @@ export const PORTAL_FILES: PortalFile[] = [
   {
     id: 'backlog',
     title: 'Modus Backlog',
-    meta: 'Sunderrajan Thiruvengadathan edited yesterday',
+    meta: 'Martin Espericueta edited yesterday',
     kind: 'sheet',
     icon: 'file_type_xls',
     href: '#',

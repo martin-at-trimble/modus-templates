@@ -1,7 +1,9 @@
 .code-editor-page {
   display: flex;
   flex-direction: column;
-  min-height: 100dvh;
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
   background-color: var(--modus-wc-color-base-page);
 }
 
@@ -310,4 +312,20 @@
   text-align: center;
   gap: 0.5rem;
   color: var(--modus-wc-color-base-content-low-contrast);
+}
+
+@media (max-width: 767px) {
+  .ce-header {
+    flex-wrap: wrap;
+    padding-inline: 0.75rem;
+  }
+
+  .ce-workspace {
+    padding: 0.5rem;
+  }
+
+  .ce-case-field {
+    max-width: none;
+    width: 100%;
+  }
 }
