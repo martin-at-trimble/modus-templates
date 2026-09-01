@@ -1,7 +1,7 @@
 # Modus templates
 
 A showcase of UI templates built with **Modus Web Components**, generated with the
-[`/modus-template`](.claude/commands/modus-template.md) Claude Code command. Each template
+[`/modus-template`](.claude/commands/modus-template.md) command. Each template
 in [`src/templates/`](src/templates/) started as a single screenshot handed to that command,
 which turns it into a copy-paste page you can drop into your own Modus app.
 
@@ -19,6 +19,9 @@ This repo has two jobs:
 | Resizable panels | `/resizable-panels` | [`src/templates/ResizablePanelsPlayground`](src/templates/ResizablePanelsPlayground) |
 | Code editor | `/code-editor` | [`src/templates/CodeEditor`](src/templates/CodeEditor) |
 | Music streaming | `/music-streaming` | [`src/templates/MusicStreaming`](src/templates/MusicStreaming) |
+| Portal | `/portal` | [`src/templates/Portal`](src/templates/Portal) |
+| Usage dashboard | `/usage-dashboard` | [`src/templates/UsageDashboard`](src/templates/UsageDashboard) |
+| Inbox | `/inbox` | [`src/templates/Inbox`](src/templates/Inbox) |
 
 Run it locally to click through them:
 
@@ -27,44 +30,67 @@ npm install
 npm run dev
 ```
 
-Each template is intentionally self-contained (one page file + a colocated data/types file) —
-see **Keep it copy-pasteable** in the command below for why, and copy a `src/templates/<Name>/`
+Open the dev-server URL (usually `http://localhost:5173`) and use the template switcher at the
+top, or go directly to a route — for example `http://localhost:5173/inbox`.
+
+Each template is intentionally self-contained (one page file + colocated data/types + scoped
+CSS) — see **Keep it copy-pasteable** in the command for why. Copy a `src/templates/<Name>/`
 folder straight into another Modus app when you find one you want.
 
 ## The `/modus-template` command
 
-[`.claude/commands/modus-template.md`](.claude/commands/modus-template.md) is a Claude Code
-slash command: give it a screenshot plus a name and title, and it builds a matching page using
-Modus components, tokens, and events — not raw HTML or another component library. It works
-against **any** Modus stack (React, Angular, Vue, vanilla); it detects your framework and
-installed Modus version before writing anything.
+[`.claude/commands/modus-template.md`](.claude/commands/modus-template.md) is a slash command:
+give it a screenshot plus a name and title, and it builds a matching page using Modus
+components, tokens, and events — not raw HTML or another component library. It works against
+**any** Modus stack (React, Angular, Vue, vanilla); it detects your framework and installed
+Modus version before writing anything.
 
 ```
-/modus-template <template name> | <page title> | [optional notes] | <browser checks level: disabled | minimal | high>
+/modus-template <template name> | <page title> | [optional notes] | [verify: disabled|minimal|high]
 ```
 
 Attach a screenshot to the same message. For example:
 
 ```
-/modus-template github-dashboard | GitHub dashboard | keep the left sidebar collapsed by default | disabled
+/modus-template inbox | Inbox template | Gmail-style mail list | minimal
 ```
 
 The command will:
 
-- Detect your framework, installed `@trimble-oss/moduswebcomponents` version, bundler, and CSS
-  setup instead of assuming Vite + React + Tailwind.
+- Detect your framework, installed `@trimble-oss/moduswebcomponents` version, bundler, CSS
+  setup, and **existing routing** instead of assuming Vite + React + Tailwind.
 - Load the matching `modus-wc-*` skill for any component it touches (tabs, modal, table, side
   navigation, form inputs, etc.) before reaching for generic MCP prop lookups.
 - Rebuild the screenshot's layout and interactions with Modus components, slots, and CSS
   tokens — never static hex, never a second component library, never a guessed icon name.
-- Ship the result as **one page**, wired as the sole route in your app (it won't merge itself
-  into an existing nav or template gallery unless you ask).
+- Implement **full narrow-screen responsiveness** (≤768px) even when you only attach a
+  desktop screenshot — navbars, side rails, lists, and tables must not overlap or clip.
+- **Wire the page into your app without breaking existing navigation:**
+  - If the project already has a router or template gallery (like this repo), **add a new route**
+    alongside the others and leave the default route / switcher unchanged.
+  - If the project is greenfield with no routing, wire this template as the sole page.
+- Ship the result as **one self-contained page** (page + colocated data + scoped CSS) — it does
+  not merge other templates' code into yours.
 - Apply small, framework-agnostic code style conventions (alphabetized props and hook
-  dependency arrays, `&&` over null-ternaries, no `!important`, reusing an existing shared
-  layout/utility stylesheet before inventing one) on top of whatever the target repo's own
-  lint/format conventions already require.
-- Start (or reuse) your dev server and actually exercise the page in a browser — clicking
-  menus, opening modals, dragging resizable panes — before calling the job done.
+  dependency arrays, `&&` over null-ternaries, reusing existing helpers before inventing new
+  ones) on top of whatever the target repo's lint/format conventions already require.
+- Verify in the browser per the **verify level** you choose (see below), including a narrow
+  viewport pass at `minimal` or `high`.
+
+When the command finishes, it posts a **Completion summary** with what was built, file paths,
+the **route to check** (e.g. `/inbox`), responsive breakpoints used, and which verification
+level ran.
+
+### Browser verification levels
+
+| Level | What runs |
+|---|---|
+| `disabled` | No browser — static code review only. Summary notes that you should smoke-test. |
+| `minimal` (default) | Dev server, one desktop snapshot, **resize to ~390px** to confirm no navbar/list overlap, console check. |
+| `high` | Full interaction sweep (menus, modals, drag/resize) plus desktop **and** narrow viewport. |
+
+Say `disabled`, `skip playwright`, or `no browser check` in notes to force `disabled`. Ask for
+a thorough pass to get `high`.
 
 ### Available everywhere, not just Claude Code
 
@@ -91,6 +117,6 @@ mechanism differ per tool. If you edit one, edit all three (each file says so at
    optional but recommended — they encode the Modus conventions (cards, buttons, forms, layout,
    accessibility, per-framework integration) the command follows, and it will read them
    automatically if present.
-4. Run `/modus-template <name> | <title> | [notes] | <browser checks level>` (Claude Code /
-   Cursor) — or trigger the equivalent prompt in Copilot — with a screenshot attached.
-
+4. Run `/modus-template <name> | <title> | [notes] | [verify level]` (Claude Code / Cursor) —
+   or trigger the equivalent prompt in Copilot — with a screenshot attached.
+5. Read the **Completion summary** at the end for the route and file paths to verify locally.

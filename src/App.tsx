@@ -12,11 +12,11 @@ import {
 } from './templates';
 
 const TEMPLATE_LINKS = [
+  { to: '/portal', label: 'Portal' },
   { to: '/github-dashboard', label: 'GitHub dashboard' },
   { to: '/resizable-panels', label: 'Resizable panels' },
   { to: '/code-editor', label: 'Code editor' },
   { to: '/music-streaming', label: 'Music streaming' },
-  { to: '/portal', label: 'Portal' },
   { to: '/usage-dashboard', label: 'Usage dashboard' },
   { to: '/inbox', label: 'Inbox' },
 ] as const;

@@ -22,14 +22,14 @@ You are a staff frontend engineer building a **copy-paste Modus template page**.
 Live browser checks (via the Playwright MCP tools) can burn a lot of tokens — full interaction sweeps, drag/resize testing, and console spot-checks all add up, especially over several iterations. Pick the level explicitly rather than always running the deepest pass:
 
 - **`disabled`** — skip the browser entirely. Do a static review of the code you wrote (JSX/markup, event wiring, icon names) instead of step 4 in **Quality bar**. State in your summary that this template was not exercised in a live browser and the user should smoke-test it themselves.
-- **`minimal`** (default) — start/reuse the dev server, navigate to the page once, take a single snapshot or screenshot, and check the console for errors. Skip exhaustively clicking every menu/modal and skip drag/resize testing unless something looks visibly broken in that first pass.
+- **`minimal`** (default) — start/reuse the dev server, navigate to the page once, take a single snapshot or screenshot at desktop width, **resize to a narrow viewport (~390px) and confirm no navbar/list/toolbar overlap**, and check the console for errors. Skip exhaustively clicking every menu/modal and skip drag/resize testing unless something looks visibly broken in that first pass.
 - **`high`** — run the full **Quality bar** step 4 as written: exercise every header action, menu, primary flow, modal, show/hide toggle, keyboard-focusable row/link, and drag/resize interaction (at every nesting level), plus a narrow-viewport resize pass.
 
 If notes or the user's message say things like "skip playwright", "no browser check", or "don't use Playwright", treat that as `disabled`. If they ask for a thorough or full verification pass, treat that as `high`.
 
 ## Goal
 
-Ship **one self-contained template page** that a developer can copy into another app. Match the screenshot's **information architecture, density, and interactions** using Modus components and tokens. Do **not** pixel-clone chrome Modus does not support.
+Ship **one self-contained template page** that a developer can copy into another app. Match the screenshot's **information architecture, density, and interactions** using Modus components and tokens. Implement **full narrow-screen responsiveness** even when no mobile screenshot is provided. Do **not** pixel-clone chrome Modus does not support.
 
 ## Before you start: discover the target repo
 
@@ -42,6 +42,7 @@ Do not assume this is a Vite + React project just because that's common. Spend a
 5. **Project-specific Modus rules:** check for `.claude/rules/modus-*.md` or `.cursor/rules/modus-*.md` in the target repo. If present, they encode this team's specific decisions and **take precedence** over the generic guidance below where they conflict. If absent, still apply everything in this playbook from memory — the absence of written-down rules doesn't mean the underlying Modus conventions don't apply.
 6. **Skills before MCP.** For any component with a dedicated `modus-wc-*` skill (e.g. `modus-wc-tabs`, `modus-wc-form-inputs`, `modus-wc-dropdown-menu`, `modus-wc-modal`, `modus-wc-table`, `modus-wc-side-navigation`, `modus-wc-autocomplete`, `modus-wc-chart-colors`, `modus-wc-react-slotted-hosts`, `modus-wc-icons-setup`), load and follow that skill **first** — it carries per-component event/`detail` shapes and edge cases that a bare MCP prop list does not. Use **Modus Docs MCP** (`get_modus_component_data`, passing the semver from step 2) to confirm prop/version drift on top of that, not as the sole source.
 7. **Existing conventions:** if the repo already has one or more pages/components, sample 1–2 of them to infer naming, folder layout, state patterns, and whether a shared form-event-reading helper already exists (something like `readInputString`/`readInputChecked`) — reuse it if so. If nothing like that exists yet, write small local readers inline rather than inventing a new shared lib for a single template. If the repo has **no existing pages at all**, use sensible, boring conventions (one file per page, colocated types/data, scoped CSS class per page root) and say so in your summary rather than guessing at a house style.
+8. **Routing:** check whether the app already has a router, template switcher, or multi-page nav. If yes, plan to **add** the new template as an additional route and **preserve** existing navigation (see **Routing and integration**). Do not repoint the default route unless the repo is greenfield.
 
 ## Framework event-prop mapping
 
@@ -66,14 +67,22 @@ Small, framework-agnostic conventions to apply regardless of the target repo's b
 - CSS: never use `!important`. If a Modus override needs to win, increase selector specificity or scope the rule more tightly instead.
 - Discovery step 7 already covers reusing a form-event-reading helper if one exists — apply the same "reuse before inventing" rule to any shared layout/utility stylesheet (e.g. a flex/gap utility file) the repo already has.
 
-## Sole page (mandatory)
+## Routing and integration (mandatory)
 
-This template is **not** part of an app with other templates.
+Discover how the target repo wires pages **before** changing entry points or navigation:
 
-- Point the app's entry/router at **only** this page. Don't wire it into an existing multi-page nav unless explicitly asked.
-- Do **not** add a gallery, sidebar of templates, or links to other pages.
-- Leave other pages/templates already on disk unused — don't merge their data, CSS, or components into this one.
-- Do **not** add `modus-wc-side-navigation` unless the screenshot clearly shows a left rail. Do **not** add a navbar component unless the screenshot clearly shows that chrome. Follow the screenshot's shell, not a default "full Modus app scaffold."
+1. **Existing routing** (template gallery, multi-page app, React Router, Vue Router, Angular routes, etc.):
+   - **Add** the new template as an **additional route** alongside existing routes. Do **not** replace, remove, or redirect existing routes.
+   - **Preserve** the app's current navigation (template switcher, sidebar links, default route, catch-all behavior) unless the user **explicitly** asks to change it.
+   - Export the page from the templates barrel (`index.ts` or equivalent) and register the route using the repo's existing path conventions (e.g. `/inbox`, `/usage-dashboard`).
+   - Do **not** point the app entry or default redirect at **only** this new page.
+
+2. **Greenfield / no routing yet** (single `index.html`, no router, no other pages):
+   - Wire the entry so this template is the only page shown — standard sole-page behavior for empty shells.
+
+3. **In all cases:**
+   - The template page itself stays **self-contained and copy-pasteable** — do not merge other templates' data, CSS, or components into it.
+   - Do **not** add `modus-wc-side-navigation` unless the screenshot clearly shows a left rail. Do **not** add a navbar unless the screenshot clearly shows that chrome. Follow the screenshot's shell, not a default full Modus app scaffold.
 
 ## Screenshot rules
 
@@ -122,6 +131,17 @@ If the screenshot or notes call for a resizable split (panels, panes, an editor 
 - Nesting one resizable split inside another pane of a different split is fragile — after building it, explicitly drag the **inner** handle and confirm the **outer** split does not also move (and vice versa). Don't assume independence; verify it.
 - If a page-level CSS override changes a resizable pane's default `flex` sizing (e.g. to force an even split instead of content-driven sizing), re-test dragging afterward — a `flex` shorthand can silently reset `flex-basis` and fight the component's own drag-applied inline styles.
 
+## Responsive layout (mandatory)
+
+Templates must be **fully responsive on narrow screens** even when the user only attaches a desktop screenshot. Mobile behavior is **required**, not optional.
+
+- Verify layout at **≤768px** width (or the repo's established breakpoint). Do not ship a desktop-only layout and wait for a mobile screenshot.
+- **Navbars** (`modus-wc-navbar`): constrain `slot="start"`, `slot="center"`, and `slot="end"` with `min-width: 0` and sensible flex shrink/grow so slots do not overlap. On narrow widths: enable `condensed`; hide or collapse `slot="center"` per Modus shell patterns (stable slot root + `hidden`, not conditional mount); progressively hide nonessential `slot="end"` actions; keep primary affordances (menu, search icon or compact search, user/avatar) reachable.
+- **Side rails, folder panes, utility columns:** collapse or hide below appropriate breakpoints; main content must remain scrollable and usable.
+- **Tables, lists, toolbars, split panes:** stack rows, reflow grids, hide secondary columns, or allow controlled horizontal scroll — no overlapping text, clipped controls, or colliding metadata.
+- **Page gutters:** keep horizontal inset at every breakpoint; do not zero out padding for "mobile."
+- Match the repo's existing responsive patterns (media-query hooks, breakpoint constants) when present.
+
 ## Quality bar
 
 Before you finish:
@@ -131,14 +151,24 @@ Before you finish:
 3. Match the repo's existing lint/format conventions (don't introduce a style the rest of the codebase doesn't use).
 4. **Browser check — depth per the resolved verify level (see Browser verification level above):**
    - `disabled`: skip; do a static read-through of your own markup/events/icon names instead, and say in your summary that it wasn't run live.
-   - `minimal`: start or reuse the dev server, navigate once, one snapshot/screenshot, check console for errors. No exhaustive interaction sweep, no drag/resize unless the single pass shows a problem.
-   - `high`: **exercise the page in the browser**: header actions, menus, primary flows, modals, show/hide, keyboard-focusable rows/links, and any **drag/resize** interaction (not just that the handle renders — actually drag it, at every nesting level). A screenshot of first paint is not enough.
+   - `minimal`: start or reuse the dev server, navigate once, one snapshot/screenshot at desktop width, **resize to ~390px and confirm responsive layout (no overlapping navbar slots, list rows, or toolbars)**, check console for errors. No exhaustive interaction sweep, no drag/resize unless the pass shows a problem.
+   - `high`: **exercise the page in the browser**: header actions, menus, primary flows, modals, show/hide, keyboard-focusable rows/links, and any **drag/resize** interaction (not just that the handle renders — actually drag it, at every nesting level). Resize desktop **and** narrow (~390px); fix overlap before finishing.
 5. Console: no errors/warnings from your markup (slot remount errors, invalid list nesting, nested buttons) — check this at `minimal` or `high`; skip at `disabled`.
-6. Resize: desktop and a narrow viewport if the screenshot implies responsive chrome — only at `high`, or at `minimal` if the first pass looked broken.
+6. **Narrow viewport (mandatory at `minimal`/`high`):** confirm navbars, lists, tables, and primary content do not overlap or overflow horizontally at ~390px. At `disabled`, state in the summary that narrow layout was implemented in CSS/markup but not browser-verified.
+
+## Completion summary (mandatory)
+
+End every run with a **Completion summary** section containing:
+
+1. **What was built** — one or two sentences on the template and key interactions.
+2. **Files** — paths to the page component, colocated data/CSS, and any routing or export changes.
+3. **Route to check** — exact path (e.g. `/inbox`) and dev-server URL when known (e.g. `http://localhost:5173/inbox`).
+4. **Responsive notes** — breakpoints used and what hides, stacks, or collapses on narrow screens.
+5. **Verification** — which verify level ran and whether narrow viewport was checked in the browser.
 
 ## Do not
 
-- Connect this template to any other page or template.
+- Replace, remove, or redirect existing routes or navigation when the repo already has routing — **add** the new template as an additional route instead.
 - Extract header/search/list/modals into separate component files "for cleanliness."
 - Add extra state only for performance, or lift state that only one control uses, unless the screenshot requires it.
 - Install a deprecated/legacy Modus package (e.g. the hyphenated `@trimble-oss/modus-web-components`, Modus 1.0) — always the current `@trimble-oss/moduswebcomponents` line.
