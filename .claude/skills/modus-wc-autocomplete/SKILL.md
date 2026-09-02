@@ -6,7 +6,7 @@ Use this skill when adding or fixing **Modus Autocomplete**. Prereqs: Modus pack
 ## Confirm API version
 
 1. Read `@trimble-oss/moduswebcomponents` from the project **`package.json`**.
-2. Call MCP **`get_modus_component_data`** with `component_name: "modus-wc-autocomplete"` and that **`version`** (server `user-modus-docs`).
+2. Call MCP **`get_modus_component_data`** with `component_name: "modus-wc-autocomplete"` and that **`version`** (server `modus-docs`).
 3. For framework setup patterns, use **`get_modus_implementation_data`** with `docs_name`: `react`, `angular`, `vue`, or `form-inputs`.
 
 ## Item shape (`IAutocompleteItem`)

@@ -10,9 +10,9 @@ Use this skill when implementing or debugging Modus components and you need **au
 
 **Cursor Cloud Agents (GitHub `cursor-agent` runs):** orchestrator attaches Modus Docs MCP via API `mcpServers` (`MODUS_DOCS_MCP_SERVERS` in `scripts/agent-orchestrator/modus-docs-mcp-mandate.ts`); prompts prepend a mandatory MCP block — team Integrations MCP is not required. See [AGENTS.md](../../AGENTS.md).
 
-## Tools (server `user-modus-docs`)
+## Tools (server `modus-docs`)
 
-Invoke the **`user-modus-docs`** server through your AI coding tool’s MCP integration, using each tool’s published schema. Typical tools:
+Invoke the **`modus-docs`** server (as configured in `.mcp.json`; check your client's MCP list for the exact name if it differs) through your AI coding tool’s MCP integration, using each tool’s published schema. Typical tools:
 
 ### `get_modus_component_data`
 

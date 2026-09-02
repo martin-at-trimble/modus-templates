@@ -119,7 +119,7 @@ Prefer **documented custom events** over native `click` where Modus defines them
 
 ## Modus docs MCP
 
-- **Server:** `user-modus-docs` (when enabled in Claude Code)
+- **Server:** `modus-docs` (as configured in `.mcp.json`; check your client's MCP list for the exact server name if it differs)
 - Read **`@trimble-oss/moduswebcomponents`** version from your **`package.json`** and pass **`version`** into MCP calls so props/events match your install.
 - **`get_modus_component_data`:** `component_name` such as `modus-wc-navbar`, or **`_all_components`** to discover tags.
 - **`get_modus_implementation_data`:** `docs_name` such as `react`, `vue`, `angular`, `form-inputs`, `getting-started`, `accessibility`.

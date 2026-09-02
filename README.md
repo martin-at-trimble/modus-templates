@@ -2,14 +2,15 @@
 
 A showcase of UI templates built with **Modus Web Components**, generated with the
 [`/modus-template`](.claude/commands/modus-template.md) command. Each template
-in [`src/templates/`](src/templates/) started as a single screenshot handed to that command,
-which turns it into a copy-paste page you can drop into your own Modus app.
+in [`src/templates/`](src/templates/) started from a **reference** (usually a screenshot)
+handed to that command, which turns it into a copy-paste page you can drop into your own Modus
+app.
 
 This repo has two jobs:
 
 1. **Showcase** what `/modus-template` produces — browse the gallery, copy a page you like.
-2. **Host the command itself** so you can pull it into your own project and point it at your
-   own screenshots.
+2. **Host the command + skill** so you can pull them into your own project and point them at
+   your own references.
 
 ## Templates in this repo
 
@@ -34,89 +35,137 @@ Open the dev-server URL (usually `http://localhost:5173`) and use the template s
 top, or go directly to a route — for example `http://localhost:5173/inbox`.
 
 Each template is intentionally self-contained (one page file + colocated data/types + scoped
-CSS) — see **Keep it copy-pasteable** in the command for why. Copy a `src/templates/<Name>/`
+CSS) — see **Keep it copy-pasteable** in the skill for why. Copy a `src/templates/<Name>/`
 folder straight into another Modus app when you find one you want.
 
 ## The `/modus-template` command
 
-[`.claude/commands/modus-template.md`](.claude/commands/modus-template.md) is a slash command:
-give it a screenshot plus a name and title, and it builds a matching page using Modus
-components, tokens, and events — not raw HTML or another component library. It works against
-**any** Modus stack (React, Angular, Vue, vanilla); it detects your framework and installed
-Modus version before writing anything.
+[`/modus-template`](.claude/commands/modus-template.md) is a **thin entry point** (reference,
+inputs, verify level, workflow). The **implementation playbook** lives in the
+[**modus-template** skill](.claude/skills/modus-template/SKILL.md) — discovery, routing,
+reference rules, Modus contract, quality bar, and completion summary. The agent **reads the
+full skill file before coding** when the command runs.
 
-```
-/modus-template <template name> | <page title> | [optional notes] | [verify: disabled|minimal|high]
-```
+Together they build a matching page from a reference using Modus components, tokens, and
+events — not raw HTML or another component library. Targets **any** Modus stack (React,
+Angular, Vue, vanilla).
 
-Attach a screenshot to the same message. For example:
+### Inputs
+
+**Required:** reference + template name + page title. The agent asks rather than guesses if
+anything is missing or the target stack is unclear.
+
+**Reference** is normally a **screenshot** (preferred). When no image is available, accept a
+design-tool link, URL to an existing page, or a **detailed** written layout spec. Vague text
+("a dashboard with charts") is not enough.
+
+**Invocation examples** (pipe syntax is optional; notes may contain `|`):
 
 ```
 /modus-template inbox | Inbox template | Gmail-style mail list | minimal
 ```
 
-The command will:
+Or paste a **canonical handoff block** in the message:
 
-- Detect your framework, installed `@trimble-oss/moduswebcomponents` version, bundler, CSS
-  setup, and **existing routing** instead of assuming Vite + React + Tailwind.
-- Load the matching `modus-wc-*` skill for any component it touches (tabs, modal, table, side
-  navigation, form inputs, etc.) before reaching for generic MCP prop lookups.
-- Rebuild the screenshot's layout and interactions with Modus components, slots, and CSS
-  tokens — never static hex, never a second component library, never a guessed icon name.
-- Implement **full narrow-screen responsiveness** (≤768px) even when you only attach a
-  desktop screenshot — navbars, side rails, lists, and tables must not overlap or clip.
-- **Wire the page into your app without breaking existing navigation:**
-  - If the project already has a router or template gallery (like this repo), **add a new route**
-    alongside the others and leave the default route / switcher unchanged.
-  - If the project is greenfield with no routing, wire this template as the sole page.
-- Ship the result as **one self-contained page** (page + colocated data + scoped CSS) — it does
-  not merge other templates' code into yours.
-- Apply small, framework-agnostic code style conventions (alphabetized props and hook
-  dependency arrays, `&&` over null-ternaries, reusing existing helpers before inventing new
-  ones) on top of whatever the target repo's lint/format conventions already require.
-- Verify in the browser per the **verify level** you choose (see below), including a narrow
-  viewport pass at `minimal` or `high`.
+```text
+Reference: screenshot attached
+Template name: Inbox
+Page title: Inbox template
+Notes: Gmail-style mail list
+Verify: minimal
+```
 
-When the command finishes, it posts a **Completion summary** with what was built, file paths,
-the **route to check** (e.g. `/inbox`), responsive breakpoints used, and which verification
-level ran.
+Attach the screenshot when using an image reference. **Verify level:** `disabled`, `minimal`
+(default), or `high`. Use `skip playwright` / `no browser check` in notes for `disabled`; ask
+for a thorough pass for `high`.
+
+Full input rules, defaults, and verify semantics: skill **Inputs contract** section.
+
+### What the skill does (invoked by the command)
+
+- **Authority ladder** — project `modus-*.md` rules → `modus-wc-*` skills → Modus Docs MCP →
+  skill deltas (so team rules win over generic prompt text).
+- **Discovery-first** — framework package, Modus semver, dev scripts, CSS stack, bootstrap
+  (`modus-wc-styles.css`, icon font, theme on `<html>`), existing page patterns, routing and
+  any central nav/registry (route table, template gallery, switcher).
+- **Framework branches** when relevant — Next.js (`modus-wc-nextjs`), charts
+  (`modus-wc-chart-colors`), Modus Blueprint URLs (`modus-blueprint-llm-context`).
+- **Skills before MCP** — loads the matching `modus-wc-*` skill per component (tabs, modal,
+  table, form inputs, side navigation, pagination, etc.) before generic prop lookups.
+- **Reference fidelity** — layout, hierarchy, and interactions with Modus APIs; ignores
+  non-configurable shell paint; validated icon names; no parallel component libraries.
+- **Full narrow-screen responsiveness** (≤768px) even with only a desktop reference.
+- **Routing without breaking the app** — adds a route/entry alongside existing ones; updates
+  central gallery or nav registries when the project uses them; preserves default route and
+  switcher (greenfield: sole page only).
+- **Copy-pasteable output** — one main UI file with region comments, colocated data + scoped
+  CSS; reuses existing project helpers when present; does not add new shared modules solely
+  for one template.
+- **Quality bar** — icon validation, repo lint/format, optional build/lint, browser check per
+  verify level (Playwright/browser MCP when available).
 
 ### Browser verification levels
 
 | Level | What runs |
 |---|---|
-| `disabled` | No browser — static code review only. Summary notes that you should smoke-test. |
-| `minimal` (default) | Dev server, one desktop snapshot, **resize to ~390px** to confirm no navbar/list overlap, console check. |
-| `high` | Full interaction sweep (menus, modals, drag/resize) plus desktop **and** narrow viewport. |
+| `disabled` | No browser (or no browser MCP). Static markup/events/icon review. Summary says you should smoke-test. |
+| `minimal` (default) | Dev server, one desktop snapshot, **resize to ~390px** (no navbar/list overlap), console check. |
+| `high` | Full interaction sweep (menus, modals, drag/resize at every nesting level), desktop + narrow viewport, **accessibility spot-check**, and **light/dark theme** verification. |
 
-Say `disabled`, `skip playwright`, or `no browser check` in notes to force `disabled`. Ask for
-a thorough pass to get `high`.
+Accessibility and theme checks are **`high` only** — not part of `minimal`.
 
-### Available everywhere, not just Claude Code
+### Completion summary
 
-The command is kept as three synced copies so it works with whichever tool you're using:
+Every run ends with a **Completion summary** covering:
 
-| Tool | Path |
-|---|---|
-| Claude Code | [`.claude/commands/modus-template.md`](.claude/commands/modus-template.md) |
-| Cursor | [`.cursor/commands/modus-template.md`](.cursor/commands/modus-template.md) |
-| GitHub Copilot | [`.github/prompts/modus-template.prompt.md`](.github/prompts/modus-template.prompt.md) |
+1. What was built
+2. Files changed (page, data/CSS, routing/registry)
+3. Route to check (+ dev-server URL when known)
+4. Responsive notes (breakpoints, what collapses on narrow)
+5. Verification (level, narrow viewport, build/lint; a11y + theme only when `high`)
+6. **Shared project assets** — what was **reused** from the project, what stayed **local to
+   the template** for copy-paste purity, and what is **suggested for promotion** to a shared
+   lib if the user adopts the template permanently
+7. Stack notes (framework, Modus semver, MCP version)
+8. **Reference gaps** — reference type used and accepted Modus/API limitations
+9. Icons (new names and how they were validated)
+10. Naming convention (matched repo precedent or default stated)
+11. **Modus adoption** — estimated %, non-Modus inventory, and why each remains (report only)
+12. **Accessibility** — issues found and possible fixes (static at all levels; browser tree at `high`; report only)
 
-All three carry the same instructions — only the invocation syntax and input-prompting
-mechanism differ per tool. If you edit one, edit all three (each file says so at the top).
+### Command + skill locations
+
+| Piece | Cursor | Claude Code |
+|---|---|---|
+| **Command** (inputs, verify, workflow) | [`.cursor/commands/modus-template.md`](.cursor/commands/modus-template.md) | [`.claude/commands/modus-template.md`](.claude/commands/modus-template.md) |
+| **Skill** (implementation playbook) | [`.cursor/skills/modus-template/SKILL.md`](.cursor/skills/modus-template/SKILL.md) | [`.claude/skills/modus-template/SKILL.md`](.claude/skills/modus-template/SKILL.md) |
+
+GitHub Copilot: [`.github/prompts/modus-template.prompt.md`](.github/prompts/modus-template.prompt.md)
+(thin command, same as above).
+
+Keep **command** copies in sync for inputs/verify; keep **skill** copies in sync for
+implementation (`npm run check:modus-template-sync`). Each file notes sibling paths at the top.
 
 ### Using it in your own project
 
-1. Copy the command file matching your tool (see table above) into the equivalent folder in
-   your project — e.g. `.claude/commands/`, `.cursor/commands/`, or `.github/prompts/` (create
-   the folder if it doesn't exist).
-2. Make sure your project has `@trimble-oss/moduswebcomponents` (or the matching framework
-   wrapper) installed — see the [Modus packages guidance](.claude/rules/modus-essentials.md#packages)
-   if not.
-3. Copying the `.claude/rules/modus-*.md` files from this repo alongside the command is
-   optional but recommended — they encode the Modus conventions (cards, buttons, forms, layout,
-   accessibility, per-framework integration) the command follows, and it will read them
-   automatically if present.
-4. Run `/modus-template <name> | <title> | [notes] | [verify level]` (Claude Code / Cursor) —
-   or trigger the equivalent prompt in Copilot — with a screenshot attached.
-5. Read the **Completion summary** at the end for the route and file paths to verify locally.
+Copy this **distribution bundle** into your repo (create folders as needed):
+
+| Asset | Cursor | Claude Code |
+|---|---|---|
+| Command | `.cursor/commands/modus-template.md` | `.claude/commands/modus-template.md` |
+| Skill | `.cursor/skills/modus-template/SKILL.md` | `.claude/skills/modus-template/SKILL.md` |
+| Modus rules (optional, recommended) | `.cursor/rules/modus-*.md` | `.claude/rules/modus-*.md` |
+| MCP config (optional) | — | `.mcp.json` (Playwright + Modus Docs MCP) |
+
+Steps:
+
+1. Copy the command and **modus-template** skill for your tool.
+2. Install `@trimble-oss/moduswebcomponents` (or the matching framework wrapper) — see
+   [Modus packages guidance](.claude/rules/modus-essentials.md#packages) if needed.
+3. Optionally copy Modus rules — the skill's authority ladder prefers them over generic text.
+4. Optionally copy `.mcp.json` or wire Playwright + Modus Docs MCP in your client for browser
+   verification and component lookups.
+5. Run `/modus-template` with a reference and name/title (slash args, Copilot prompt fields, or
+   the canonical handoff block). The agent reads **modus-template** before coding.
+6. Read the **Completion summary** — especially **Shared project assets** and **Route to
+   check** — before verifying locally.
